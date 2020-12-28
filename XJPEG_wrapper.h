@@ -656,7 +656,7 @@ public:
      * 默认情况下，其值为 J_TRUE，操作文件流后，会自动还原原文件指针位置。
      * @note  详情请参看 jdec_is_rfio() 的说明。
      */
-    inline j_bool_t is_rfio(jdec_ctxptr_t jdec_cptr) const
+    inline j_bool_t is_rfio(void) const
     {
         return jdec_is_rfio(m_jdec_cptr);
     }
