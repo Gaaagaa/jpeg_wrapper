@@ -124,7 +124,7 @@ subimage(void)
 std::vector< x_byte_t > xvec_rgb;
 x_int32_t xit_width  = 0;
 x_int32_t xit_height = 0;
-x_int32_t xit_rgbxx  = JCTRL_CS_RGB24;
+x_int32_t xit_rgbxx  = JCTRL_CS_RGB;
 
 //======================================
 // 解码操作相关的变量
@@ -387,16 +387,18 @@ x_int32_t enc_mode_mem(void)
 
     switch (xit_rgbxx)
     {
-    case JCTRL_CS_RGB24:
-    case JCTRL_CS_BGR24:
+    case JCTRL_CS_RGB:
+    case JCTRL_CS_BGR:
         {
             jit_stride = (3 * xit_width + 3) & ~3;
             jmem_iptr  = xvec_rgb.data() + jit_stride * xit_height / 4 + 3 * xit_width / 4;
         }
         break;
 
-    case JCTRL_CS_RGB32:
-    case JCTRL_CS_BGR32:
+    case JCTRL_CS_RGBA:
+    case JCTRL_CS_BGRA:
+    case JCTRL_CS_ARGB:
+    case JCTRL_CS_ABGR:
         {
             jit_stride = 4 * xit_width;
             jmem_iptr  = xvec_rgb.data() + jit_stride * xit_height / 4 + xit_width;
@@ -474,16 +476,18 @@ x_int32_t enc_mode_fio(void)
 
     switch (xit_rgbxx)
     {
-    case JCTRL_CS_RGB24:
-    case JCTRL_CS_BGR24:
+    case JCTRL_CS_RGB:
+    case JCTRL_CS_BGR:
         {
             jit_stride = (3 * xit_width + 3) & ~3;
             jmem_iptr  = xvec_rgb.data() + jit_stride * xit_height / 4 + 3 * xit_width / 4;
         }
         break;
 
-    case JCTRL_CS_RGB32:
-    case JCTRL_CS_BGR32:
+    case JCTRL_CS_RGBA:
+    case JCTRL_CS_BGRA:
+    case JCTRL_CS_ARGB:
+    case JCTRL_CS_ABGR:
         {
             jit_stride = 4 * xit_width;
             jmem_iptr  = xvec_rgb.data() + jit_stride * xit_height / 4 + xit_width;
@@ -541,16 +545,18 @@ x_int32_t enc_mode_file(void)
 
     switch (xit_rgbxx)
     {
-    case JCTRL_CS_RGB24:
-    case JCTRL_CS_BGR24:
+    case JCTRL_CS_RGB:
+    case JCTRL_CS_BGR:
         {
             jit_stride = (3 * xit_width + 3) & ~3;
             jmem_iptr  = xvec_rgb.data() + jit_stride * xit_height / 4 + 3 * xit_width / 4;
         }
         break;
 
-    case JCTRL_CS_RGB32:
-    case JCTRL_CS_BGR32:
+    case JCTRL_CS_RGBA:
+    case JCTRL_CS_BGRA:
+    case JCTRL_CS_ARGB:
+    case JCTRL_CS_ABGR:
         {
             jit_stride = 4 * xit_width;
             jmem_iptr  = xvec_rgb.data() + jit_stride * xit_height / 4 + xit_width;
@@ -579,12 +585,12 @@ x_int32_t enc_mode_file(void)
 
 x_void_t usage(void)
 {
-    printf("subimage < dec mode > < in > < enc mode > < out > [ rgb: rgb24 ]\n"
-           "      dec mode : mem | fio | file .                             \n"
-           "      in       : the jpeg image filepath of input .             \n"
-           "      enc mode : mem | fio | file .                             \n"
-           "      out      : the jpeg subimage filepath of output .         \n"
-           "      rgb      : rgb24 | bgr24 | rgb32 | bgr32 .                \n");
+    printf("subimage < dec mode > < in > < enc mode > < out > [ rgb: rgb ]\n"
+           "      dec mode : mem | fio | file .                           \n"
+           "      in       : the jpeg image filepath of input .           \n"
+           "      enc mode : mem | fio | file .                           \n"
+           "      out      : the jpeg subimage filepath of output .       \n"
+           "      rgb      : rgb | bgr | rgba | bgra | argb | abgr .      \n");
 }
 
 x_int32_t get_mode(x_cstring_t xszt_mode)
@@ -600,14 +606,18 @@ x_int32_t get_mode(x_cstring_t xszt_mode)
 
 x_int32_t get_rgbxx(x_cstring_t xszt_rgbxx)
 {
-    if (0 == xstr_icmp(xszt_rgbxx, "rgb24"))
-        return JCTRL_CS_RGB24;
-    if (0 == xstr_icmp(xszt_rgbxx, "bgr24"))
-        return JCTRL_CS_BGR24;
-    if (0 == xstr_icmp(xszt_rgbxx, "rgb32"))
-        return JCTRL_CS_RGB32;
-    if (0 == xstr_icmp(xszt_rgbxx, "bgr32"))
-        return JCTRL_CS_BGR32;
+    if (0 == xstr_icmp(xszt_rgbxx, "rgb"))
+        return JCTRL_CS_RGB;
+    if (0 == xstr_icmp(xszt_rgbxx, "bgr"))
+        return JCTRL_CS_BGR;
+    if (0 == xstr_icmp(xszt_rgbxx, "rgba"))
+        return JCTRL_CS_RGBA;
+    if (0 == xstr_icmp(xszt_rgbxx, "bgra"))
+        return JCTRL_CS_BGRA;
+    if (0 == xstr_icmp(xszt_rgbxx, "argb"))
+        return JCTRL_CS_ARGB;
+    if (0 == xstr_icmp(xszt_rgbxx, "abgr"))
+        return JCTRL_CS_ABGR;
     return JCTRL_CS_UNKNOW;
 }
 
@@ -656,8 +666,8 @@ int main(int argc, char * argv[])
         if (JCTRL_CS_UNKNOW == xit_rgbxx)
         {
             usage();
-            printf("args [ rgb: %s ] error! use default rgb24.\n", argv[6]);
-            xit_rgbxx = JCTRL_CS_RGB24;
+            printf("args [ rgb: %s ] error! use default rgb.\n", argv[6]);
+            xit_rgbxx = JCTRL_CS_RGB;
         }
     }
 
@@ -732,50 +742,68 @@ int main(int argc, char * argv[])
 
     x_char_t xct_argv[][ARGS_LIST_LEN][ARGS_TEXT_LEN] =
     {
-        { "subimage", "mem" , "", "mem" , "", "rgb24" },
-        { "subimage", "mem" , "", "mem" , "", "bgr24" },
-        { "subimage", "mem" , "", "mem" , "", "rgb32" },
-        { "subimage", "mem" , "", "mem" , "", "bgr32" },
+        { "subimage", "mem" , "", "mem" , "", "rgb"  },
+        { "subimage", "mem" , "", "mem" , "", "bgr"  },
+        { "subimage", "mem" , "", "mem" , "", "rgba" },
+        { "subimage", "mem" , "", "mem" , "", "bgra" },
+        { "subimage", "mem" , "", "mem" , "", "argb" },
+        { "subimage", "mem" , "", "mem" , "", "abgr" },
 
-        { "subimage", "mem" , "", "fio" , "", "rgb24" },
-        { "subimage", "mem" , "", "fio" , "", "bgr24" },
-        { "subimage", "mem" , "", "fio" , "", "rgb32" },
-        { "subimage", "mem" , "", "fio" , "", "bgr32" },
+        { "subimage", "mem" , "", "fio" , "", "rgb"  },
+        { "subimage", "mem" , "", "fio" , "", "bgr"  },
+        { "subimage", "mem" , "", "fio" , "", "rgba" },
+        { "subimage", "mem" , "", "fio" , "", "bgra" },
+        { "subimage", "mem" , "", "fio" , "", "argb" },
+        { "subimage", "mem" , "", "fio" , "", "abgr" },
 
-        { "subimage", "mem" , "", "file", "", "rgb24" },
-        { "subimage", "mem" , "", "file", "", "bgr24" },
-        { "subimage", "mem" , "", "file", "", "rgb32" },
-        { "subimage", "mem" , "", "file", "", "bgr32" },
+        { "subimage", "mem" , "", "file", "", "rgb"  },
+        { "subimage", "mem" , "", "file", "", "bgr"  },
+        { "subimage", "mem" , "", "file", "", "rgba" },
+        { "subimage", "mem" , "", "file", "", "bgra" },
+        { "subimage", "mem" , "", "file", "", "argb" },
+        { "subimage", "mem" , "", "file", "", "abgr" },
 
-        { "subimage", "fio" , "", "mem" , "", "rgb24" },
-        { "subimage", "fio" , "", "mem" , "", "bgr24" },
-        { "subimage", "fio" , "", "mem" , "", "rgb32" },
-        { "subimage", "fio" , "", "mem" , "", "bgr32" },
+        { "subimage", "fio" , "", "mem" , "", "rgb"  },
+        { "subimage", "fio" , "", "mem" , "", "bgr"  },
+        { "subimage", "fio" , "", "mem" , "", "rgba" },
+        { "subimage", "fio" , "", "mem" , "", "bgra" },
+        { "subimage", "fio" , "", "mem" , "", "argb" },
+        { "subimage", "fio" , "", "mem" , "", "abgr" },
 
-        { "subimage", "fio" , "", "fio" , "", "rgb24" },
-        { "subimage", "fio" , "", "fio" , "", "bgr24" },
-        { "subimage", "fio" , "", "fio" , "", "rgb32" },
-        { "subimage", "fio" , "", "fio" , "", "bgr32" },
+        { "subimage", "fio" , "", "fio" , "", "rgb"  },
+        { "subimage", "fio" , "", "fio" , "", "bgr"  },
+        { "subimage", "fio" , "", "fio" , "", "rgba" },
+        { "subimage", "fio" , "", "fio" , "", "bgra" },
+        { "subimage", "fio" , "", "fio" , "", "argb" },
+        { "subimage", "fio" , "", "fio" , "", "abgr" },
 
-        { "subimage", "fio" , "", "file", "", "rgb24" },
-        { "subimage", "fio" , "", "file", "", "bgr24" },
-        { "subimage", "fio" , "", "file", "", "rgb32" },
-        { "subimage", "fio" , "", "file", "", "bgr32" },
+        { "subimage", "fio" , "", "file", "", "rgb"  },
+        { "subimage", "fio" , "", "file", "", "bgr"  },
+        { "subimage", "fio" , "", "file", "", "rgba" },
+        { "subimage", "fio" , "", "file", "", "bgra" },
+        { "subimage", "fio" , "", "file", "", "argb" },
+        { "subimage", "fio" , "", "file", "", "abgr" },
 
-        { "subimage", "file", "", "mem" , "", "rgb24" },
-        { "subimage", "file", "", "mem" , "", "bgr24" },
-        { "subimage", "file", "", "mem" , "", "rgb32" },
-        { "subimage", "file", "", "mem" , "", "bgr32" },
+        { "subimage", "file", "", "mem" , "", "rgb"  },
+        { "subimage", "file", "", "mem" , "", "bgr"  },
+        { "subimage", "file", "", "mem" , "", "rgba" },
+        { "subimage", "file", "", "mem" , "", "bgra" },
+        { "subimage", "file", "", "mem" , "", "argb" },
+        { "subimage", "file", "", "mem" , "", "abgr" },
 
-        { "subimage", "file", "", "fio" , "", "rgb24" },
-        { "subimage", "file", "", "fio" , "", "bgr24" },
-        { "subimage", "file", "", "fio" , "", "rgb32" },
-        { "subimage", "file", "", "fio" , "", "bgr32" },
+        { "subimage", "file", "", "fio" , "", "rgb"  },
+        { "subimage", "file", "", "fio" , "", "bgr"  },
+        { "subimage", "file", "", "fio" , "", "rgba" },
+        { "subimage", "file", "", "fio" , "", "bgra" },
+        { "subimage", "file", "", "fio" , "", "argb" },
+        { "subimage", "file", "", "fio" , "", "abgr" },
 
-        { "subimage", "file", "", "file", "", "rgb24" },
-        { "subimage", "file", "", "file", "", "bgr24" },
-        { "subimage", "file", "", "file", "", "rgb32" },
-        { "subimage", "file", "", "file", "", "bgr32" }
+        { "subimage", "file", "", "file", "", "rgb"  },
+        { "subimage", "file", "", "file", "", "bgr"  },
+        { "subimage", "file", "", "file", "", "rgba" },
+        { "subimage", "file", "", "file", "", "bgra" },
+        { "subimage", "file", "", "file", "", "argb" },
+        { "subimage", "file", "", "file", "", "abgr" }
     };
 
     const x_int32_t xit_count = sizeof(xct_argv) / (ARGS_LIST_LEN * ARGS_TEXT_LEN);

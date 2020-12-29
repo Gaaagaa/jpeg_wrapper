@@ -1,6 +1,6 @@
 ﻿/**
  * @file XJPEG_wrapper.h
- * Copyright (c) Gaaagaa. All rights reserved.
+ * Copyright (c) 2020 Gaaagaa. All rights reserved.
  * 
  * @author  : Gaaagaa
  * @date    : 2020-12-18
@@ -71,10 +71,12 @@ typedef enum jpeg_color_space_t
 typedef enum jctrl_color_space_t
 {
     JCTRL_CS_UNKNOW = 0x00000000, ///< 未知格式
-    JCTRL_CS_RGB24  = 0x00010118, ///< RGB 24位 格式，顺序为 RGB
-    JCTRL_CS_BGR24  = 0x00010218, ///< RGB 24位 格式，顺序为 BGR
-    JCTRL_CS_RGB32  = 0x00010120, ///< RGB 32位 格式，顺序为 RGBx，编码时忽略 ALPHA 通道值
-    JCTRL_CS_BGR32  = 0x00010220, ///< RGB 32位 格式，顺序为 BGRx，编码时忽略 ALPHA 通道值
+    JCTRL_CS_RGB    = 0x00010118, ///< RGB 24位 格式，顺序为 RGB
+    JCTRL_CS_BGR    = 0x00010218, ///< RGB 24位 格式，顺序为 BGR
+    JCTRL_CS_RGBA   = 0x00010120, ///< RGB 32位 格式，顺序为 RGBA，编码时忽略 ALPHA 通道值
+    JCTRL_CS_BGRA   = 0x00010220, ///< RGB 32位 格式，顺序为 BGRA，编码时忽略 ALPHA 通道值
+    JCTRL_CS_ARGB   = 0x00010320, ///< RGB 32位 格式，顺序为 ARGB，编码时忽略 ALPHA 通道值
+    JCTRL_CS_ABGR   = 0x00010420, ///< RGB 32位 格式，顺序为 ABGR，编码时忽略 ALPHA 通道值
 } jctrl_color_space_t;
 
 /**

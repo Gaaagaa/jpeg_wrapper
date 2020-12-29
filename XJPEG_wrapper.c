@@ -1,6 +1,6 @@
 ﻿/**
  * @file XJPEG_wrapper.c
- * Copyright (c) Gaaagaa. All rights reserved.
+ * Copyright (c) 2020 Gaaagaa. All rights reserved.
  * 
  * @author  : Gaaagaa
  * @date    : 2020-12-18
@@ -56,7 +56,7 @@ static inline j_uint_t jval_align(j_uint_t jut_val, j_uint_t jut_align)
     return ((jut_val + jut_align - 1) & ~(jut_align - 1));
 }
 
-static j_void_t rgb24_copy_bgr24_line(
+static j_void_t rgb_copy_bgr_line(
                     j_mem_t jct_optr,
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
@@ -71,7 +71,7 @@ static j_void_t rgb24_copy_bgr24_line(
     }
 }
 
-static j_void_t rgb24_copy_bgr32_line(
+static j_void_t rgb_copy_bgra_line(
                     j_mem_t jct_optr,
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
@@ -86,7 +86,7 @@ static j_void_t rgb24_copy_bgr32_line(
     }
 }
 
-static j_void_t rgb24_copy_rgb32_line(
+static j_void_t rgb_copy_rgba_line(
                     j_mem_t jct_optr,
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
@@ -101,7 +101,37 @@ static j_void_t rgb24_copy_rgb32_line(
     }
 }
 
-static j_void_t rgb24_cvt_bgr24_line(
+static j_void_t rgb_copy_abgr_line(
+                    j_mem_t jct_optr,
+                    j_mem_t jct_iptr,
+                    j_int_t jit_imgw)
+{
+    while (jit_imgw-- > 0)
+    {
+        *jct_optr++ = *(jct_iptr + 3);
+        *jct_optr++ = *(jct_iptr + 2);
+        *jct_optr++ = *(jct_iptr + 1);
+
+        jct_iptr += 4;
+    }
+}
+
+static j_void_t rgb_copy_argb_line(
+                    j_mem_t jct_optr,
+                    j_mem_t jct_iptr,
+                    j_int_t jit_imgw)
+{
+    while (jit_imgw-- > 0)
+    {
+        jct_iptr += 1;
+
+        *jct_optr++ = *jct_iptr++;
+        *jct_optr++ = *jct_iptr++;
+        *jct_optr++ = *jct_iptr++;
+    }
+}
+
+static j_void_t rgb_transto_bgr_line(
                     j_mem_t jct_lptr,
                     j_int_t jit_imgw)
 {
@@ -116,7 +146,7 @@ static j_void_t rgb24_cvt_bgr24_line(
     }
 }
 
-static j_void_t rgb24_expandto_rgb32_line(
+static j_void_t rgb_expandto_rgba_line(
                     j_mem_t   jct_mptr,
                     j_uchar_t jct_alpha,
                     j_int_t   jit_imgw)
@@ -133,7 +163,7 @@ static j_void_t rgb24_expandto_rgb32_line(
     }
 }
 
-static j_void_t rgb24_expandto_bgr32_line(
+static j_void_t rgb_expandto_bgra_line(
                     j_mem_t   jct_mptr,
                     j_uchar_t jct_alpha,
                     j_int_t   jit_imgw)
@@ -147,6 +177,41 @@ static j_void_t rgb24_expandto_bgr32_line(
         *jct_dptr-- = *(jct_sptr - 2);
         *jct_dptr-- = *(jct_sptr - 1);
         *jct_dptr-- = *(jct_sptr - 0);
+        jct_sptr -= 3;
+    }
+}
+
+static j_void_t rgb_expandto_argb_line(
+                    j_mem_t   jct_mptr,
+                    j_uchar_t jct_alpha,
+                    j_int_t   jit_imgw)
+{
+    register j_mem_t jct_sptr = jct_mptr + 3 * jit_imgw - 1;
+    register j_mem_t jct_dptr = jct_mptr + 4 * jit_imgw - 1;
+
+    while (jit_imgw-- > 0)
+    {
+        *jct_dptr-- = *jct_sptr--;
+        *jct_dptr-- = *jct_sptr--;
+        *jct_dptr-- = *jct_sptr--;
+        *jct_dptr-- = jct_alpha;
+    }
+}
+
+static j_void_t rgb_expandto_abgr_line(
+                    j_mem_t   jct_mptr,
+                    j_uchar_t jct_alpha,
+                    j_int_t   jit_imgw)
+{
+    register j_mem_t jct_sptr = jct_mptr + 3 * jit_imgw - 1;
+    register j_mem_t jct_dptr = jct_mptr + 4 * jit_imgw - 1;
+
+    while (jit_imgw-- > 0)
+    {
+        *jct_dptr-- = *(jct_sptr - 2);
+        *jct_dptr-- = *(jct_sptr - 1);
+        *jct_dptr-- = *(jct_sptr - 0);
+        *jct_dptr-- = jct_alpha;
         jct_sptr -= 3;
     }
 }
@@ -381,10 +446,12 @@ static j_int_t jenc_from_rgb(
 
         switch (jit_ctrlcs)
         {
-        case JCTRL_CS_RGB24:
-        case JCTRL_CS_BGR24:
-        case JCTRL_CS_RGB32:
-        case JCTRL_CS_BGR32:
+        case JCTRL_CS_RGB :
+        case JCTRL_CS_BGR :
+        case JCTRL_CS_RGBA:
+        case JCTRL_CS_BGRA:
+        case JCTRL_CS_ARGB:
+        case JCTRL_CS_ABGR:
             break;
         default: jit_ctrlcs = JCTRL_CS_UNKNOW;
             break;
@@ -445,7 +512,7 @@ static j_int_t jenc_from_rgb(
 
         switch (jit_ctrlcs)
         {
-        case JCTRL_CS_RGB24:
+        case JCTRL_CS_RGB:
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 jpeg_write_scanlines(jcs_ptr, &jct_lptr, 1);
@@ -453,30 +520,50 @@ static j_int_t jenc_from_rgb(
             }
             break;
 
-        case JCTRL_CS_BGR24:
+        case JCTRL_CS_BGR:
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
-                rgb24_copy_bgr24_line(
+                rgb_copy_bgr_line(
                     jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
                 jct_lptr += jit_stride;
             }
             break;
 
-        case JCTRL_CS_RGB32:
+        case JCTRL_CS_RGBA:
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
-                rgb24_copy_rgb32_line(
+                rgb_copy_rgba_line(
                     jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
                 jct_lptr += jit_stride;
             }
             break;
 
-        case JCTRL_CS_BGR32:
+        case JCTRL_CS_BGRA:
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
-                rgb24_copy_bgr32_line(
+                rgb_copy_bgra_line(
+                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                jct_lptr += jit_stride;
+            }
+            break;
+
+        case JCTRL_CS_ARGB:
+            while (jcs_ptr->next_scanline < jcs_ptr->image_height)
+            {
+                rgb_copy_argb_line(
+                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                jct_lptr += jit_stride;
+            }
+            break;
+
+        case JCTRL_CS_ABGR:
+            while (jcs_ptr->next_scanline < jcs_ptr->image_height)
+            {
+                rgb_copy_abgr_line(
                     jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
                 jct_lptr += jit_stride;
@@ -843,10 +930,12 @@ j_int_t jenc_rgb_to_dst(
 
         switch (jit_ctrlcs)
         {
-        case JCTRL_CS_RGB24:
-        case JCTRL_CS_BGR24:
-        case JCTRL_CS_RGB32:
-        case JCTRL_CS_BGR32:
+        case JCTRL_CS_RGB :
+        case JCTRL_CS_BGR :
+        case JCTRL_CS_RGBA:
+        case JCTRL_CS_BGRA:
+        case JCTRL_CS_ARGB:
+        case JCTRL_CS_ABGR:
             break;
         default: jit_ctrlcs = JCTRL_CS_UNKNOW;
             break;
@@ -1210,10 +1299,12 @@ static j_int_t jdec_to_rgb(
 
         switch (jit_ctrlcs)
         {
-        case JCTRL_CS_RGB24:
-        case JCTRL_CS_BGR24:
-        case JCTRL_CS_RGB32:
-        case JCTRL_CS_BGR32:
+        case JCTRL_CS_RGB :
+        case JCTRL_CS_BGR :
+        case JCTRL_CS_RGBA:
+        case JCTRL_CS_BGRA:
+        case JCTRL_CS_ARGB:
+        case JCTRL_CS_ABGR:
             break;
         default: jit_ctrlcs = JCTRL_CS_UNKNOW;
             break;
@@ -1291,7 +1382,7 @@ static j_int_t jdec_to_rgb(
 
         switch (jit_ctrlcs)
         {
-        case JCTRL_CS_RGB24:
+        case JCTRL_CS_RGB:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
                 jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
@@ -1299,20 +1390,20 @@ static j_int_t jdec_to_rgb(
             }
             break;
 
-        case JCTRL_CS_BGR24:
+        case JCTRL_CS_BGR:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
                 jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
-                rgb24_cvt_bgr24_line(jct_mptr, (j_int_t)jds_ptr->output_width);
+                rgb_transto_bgr_line(jct_mptr, (j_int_t)jds_ptr->output_width);
                 jct_mptr += jit_stride;
             }
             break;
 
-        case JCTRL_CS_RGB32:
+        case JCTRL_CS_RGBA:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
                 jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
-                rgb24_expandto_rgb32_line(
+                rgb_expandto_rgba_line(
                             jct_mptr,
                             jct_alpha,
                             jds_ptr->output_width);
@@ -1320,11 +1411,35 @@ static j_int_t jdec_to_rgb(
             }
             break;
 
-        case JCTRL_CS_BGR32:
+        case JCTRL_CS_BGRA:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
                 jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
-                rgb24_expandto_bgr32_line(
+                rgb_expandto_bgra_line(
+                            jct_mptr,
+                            jct_alpha,
+                            jds_ptr->output_width);
+                jct_mptr += jit_stride;
+            }
+            break;
+
+        case JCTRL_CS_ARGB:
+            while (jds_ptr->output_scanline < jds_ptr->output_height)
+            {
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
+                rgb_expandto_argb_line(
+                            jct_mptr,
+                            jct_alpha,
+                            jds_ptr->output_width);
+                jct_mptr += jit_stride;
+            }
+            break;
+
+        case JCTRL_CS_ABGR:
+            while (jds_ptr->output_scanline < jds_ptr->output_height)
+            {
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
+                rgb_expandto_abgr_line(
                             jct_mptr,
                             jct_alpha,
                             jds_ptr->output_width);
@@ -1674,10 +1789,12 @@ j_int_t jdec_src_to_rgb(
 
         switch (jit_ctrlcs)
         {
-        case JCTRL_CS_RGB24:
-        case JCTRL_CS_BGR24:
-        case JCTRL_CS_RGB32:
-        case JCTRL_CS_BGR32:
+        case JCTRL_CS_RGB :
+        case JCTRL_CS_BGR :
+        case JCTRL_CS_RGBA:
+        case JCTRL_CS_BGRA:
+        case JCTRL_CS_ARGB:
+        case JCTRL_CS_ABGR:
             break;
         default: jit_ctrlcs = JCTRL_CS_UNKNOW;
             break;
