@@ -511,7 +511,6 @@ static j_int_t jenc_from_rgb(
         case JPEG_CS_GRAYSCALE : jpeg_set_colorspace(jcs_ptr, JCS_GRAYSCALE); break;
         case JPEG_CS_RGB       : jpeg_set_colorspace(jcs_ptr, JCS_RGB      ); break;
         case JPEG_CS_YCbCr     : jpeg_set_colorspace(jcs_ptr, JCS_YCbCr    ); break;
-        case JPEG_CS_BG_RGB    : jpeg_set_colorspace(jcs_ptr, JCS_BG_RGB   ); break;
         case JPEG_CS_BG_YCC    : jpeg_set_colorspace(jcs_ptr, JCS_BG_YCC   ); break;
 
         default:
@@ -1350,11 +1349,24 @@ static j_int_t jdec_to_rgb(
             break;
         }
 
-        // 必须是 3通道 的 JPEG 图像，且输出的色彩空间格式为 RGB
-        if ((3 != jds_ptr->num_components) ||
-            (JCS_RGB != jds_ptr->out_color_space))
+        // 设置解码输出的色彩空间，libjpeg.txt 文档中，只支持
+        // YCbCr, BG_YCC, GRAYSCALE, RGB 这几种模式转 RGB
+        jit_err = JDEC_ERR_UNKNOW;
+        switch (jds_ptr->jpeg_color_space)
         {
+        case JCS_GRAYSCALE :
+        case JCS_RGB       :
+        case JCS_YCbCr     :
+        case JCS_BG_YCC    :
+            jds_ptr->out_color_space = JCS_RGB;
+            break;
+
+        default:
             jit_err = JDEC_ERR_COLOR_FORMAT;
+            break;
+        }
+        if (JDEC_ERR_COLOR_FORMAT == jit_err)
+        {
             break;
         }
 
