@@ -964,7 +964,7 @@ j_int_t jenc_rgb_to_dst(
             case JPEG_CS_GRAYSCALE:
             case JPEG_CS_RGB      :
             case JPEG_CS_YCbCr    :
-            case JPEG_CS_BG_YCC   :                
+            case JPEG_CS_BG_YCC   :
                 break;
             default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
                 break;
