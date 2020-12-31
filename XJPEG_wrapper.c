@@ -452,6 +452,17 @@ static j_int_t jenc_from_rgb(
         case JCTRL_CS_BGRA:
         case JCTRL_CS_ARGB:
         case JCTRL_CS_ABGR:
+            switch (JENC_CTRLCS_JPEG(jit_ctrlcs))
+            {
+            case JPEG_CS_UNKNOWN  :
+            case JPEG_CS_GRAYSCALE:
+            case JPEG_CS_RGB      :
+            case JPEG_CS_YCbCr    :
+            case JPEG_CS_BG_YCC   :                
+                break;
+            default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
+                break;
+            }
             break;
         default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
             break;
@@ -947,6 +958,17 @@ j_int_t jenc_rgb_to_dst(
         case JCTRL_CS_BGRA:
         case JCTRL_CS_ARGB:
         case JCTRL_CS_ABGR:
+            switch (JENC_CTRLCS_JPEG(jit_ctrlcs))
+            {
+            case JPEG_CS_UNKNOWN  :
+            case JPEG_CS_GRAYSCALE:
+            case JPEG_CS_RGB      :
+            case JPEG_CS_YCbCr    :
+            case JPEG_CS_BG_YCC   :                
+                break;
+            default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
+                break;
+            }
             break;
         default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
             break;
@@ -1354,10 +1376,10 @@ static j_int_t jdec_to_rgb(
         jit_err = JDEC_ERR_UNKNOW;
         switch (jds_ptr->jpeg_color_space)
         {
-        case JCS_GRAYSCALE :
-        case JCS_RGB       :
-        case JCS_YCbCr     :
-        case JCS_BG_YCC    :
+        case JCS_GRAYSCALE:
+        case JCS_RGB      :
+        case JCS_YCbCr    :
+        case JCS_BG_YCC   :
             jds_ptr->out_color_space = JCS_RGB;
             break;
 
