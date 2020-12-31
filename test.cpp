@@ -821,7 +821,7 @@ int main(int argc, char * argv[])
 
     if (0 != X_mkdir(xstr_path.c_str(), 0755))
     {
-        printf("X_mkdir([%s], 07) failed!", xstr_path.c_str());
+        printf("X_mkdir([%s], 0755) failed!", xstr_path.c_str());
         return -1;
     }
 
