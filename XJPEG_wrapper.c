@@ -398,7 +398,7 @@ static j_int_t jenc_query_dst(jenc_ctxptr_t jenc_cptr, jpeg_dstptr_t jpeg_dptr)
  * @param [in ] jit_stride  : RGB 图像数据 像素行 步进大小。
  * @param [in ] jit_width   : RGB 图像数据 宽度。
  * @param [in ] jit_height  : RGB 图像数据 高度。
- * @param [in ] jit_ctrlcs  : RGB 图像数据 像素格式（参看 jctrl_color_space_t）。
+ * @param [in ] jit_ctrlcs  : 图像色彩空间的转换方式（参看 jenc_ctrlcs_t）。
  * 
  * @return j_int_t : 
  * - 操作失败时，返回值 < 0，表示 错误码，
@@ -444,7 +444,7 @@ static j_int_t jenc_from_rgb(
             break;
         }
 
-        switch (jit_ctrlcs)
+        switch (JENC_CTRLCS_CTRL(jit_ctrlcs))
         {
         case JCTRL_CS_RGB :
         case JCTRL_CS_BGR :
@@ -453,11 +453,11 @@ static j_int_t jenc_from_rgb(
         case JCTRL_CS_ARGB:
         case JCTRL_CS_ABGR:
             break;
-        default: jit_ctrlcs = JCTRL_CS_UNKNOW;
+        default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
             break;
         }
 
-        if (JCTRL_CS_UNKNOW == jit_ctrlcs)
+        if (JENC_CTRLCS_UNKNOW == jit_ctrlcs)
         {
             jit_err = JENC_ERR_INVALID_PARAM;
             break;
@@ -506,11 +506,23 @@ static j_int_t jenc_from_rgb(
         jpeg_set_defaults(jcs_ptr);
         jpeg_set_quality(jcs_ptr, jenc_cptr->jit_encq, 1);
 
+        switch (JENC_CTRLCS_JPEG(jit_ctrlcs))
+        {
+        case JPEG_CS_GRAYSCALE : jpeg_set_colorspace(jcs_ptr, JCS_GRAYSCALE); break;
+        case JPEG_CS_RGB       : jpeg_set_colorspace(jcs_ptr, JCS_RGB      ); break;
+        case JPEG_CS_YCbCr     : jpeg_set_colorspace(jcs_ptr, JCS_YCbCr    ); break;
+        case JPEG_CS_BG_RGB    : jpeg_set_colorspace(jcs_ptr, JCS_BG_RGB   ); break;
+        case JPEG_CS_BG_YCC    : jpeg_set_colorspace(jcs_ptr, JCS_BG_YCC   ); break;
+
+        default:
+            break;
+        }
+
         //======================================
 
         jpeg_start_compress(jcs_ptr, 1);
 
-        switch (jit_ctrlcs)
+        switch (JENC_CTRLCS_CTRL(jit_ctrlcs))
         {
         case JCTRL_CS_RGB:
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
@@ -892,7 +904,7 @@ j_int_t jenc_config_dst(
  * @param [in ] jit_stride : RGB 图像数据 像素行 步进大小。
  * @param [in ] jit_width  : RGB 图像数据 宽度。
  * @param [in ] jit_height : RGB 图像数据 高度。
- * @param [in ] jit_ctrlcs : RGB 图像数据 像素格式（参看 jctrl_color_space_t）。
+ * @param [in ] jit_ctrlcs : 图像色彩空间的转换方式（参看 jenc_ctrlcs_t）。
  * 
  * @return j_int_t :
  * - 操作失败时，返回值 < 0，表示 错误码，参看 jenc_errno_table_t 相关枚举值。
@@ -928,7 +940,7 @@ j_int_t jenc_rgb_to_dst(
             break;
         }
 
-        switch (jit_ctrlcs)
+        switch (JENC_CTRLCS_CTRL(jit_ctrlcs))
         {
         case JCTRL_CS_RGB :
         case JCTRL_CS_BGR :
@@ -937,11 +949,11 @@ j_int_t jenc_rgb_to_dst(
         case JCTRL_CS_ARGB:
         case JCTRL_CS_ABGR:
             break;
-        default: jit_ctrlcs = JCTRL_CS_UNKNOW;
+        default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
             break;
         }
 
-        if (JCTRL_CS_UNKNOW == jit_ctrlcs)
+        if (JENC_CTRLCS_UNKNOW == jit_ctrlcs)
         {
             jit_err = JENC_ERR_INVALID_PARAM;
             break;
@@ -1260,7 +1272,6 @@ __EXIT_FUNC__:
  * @param [out] jit_width  : 操作成功返回的图像宽度（像素为单位）。
  * @param [out] jit_height : 操作成功返回的图像高度（像素为单位）。
  * @param [in ] jit_ctrlcs : 要求输出的 RGB 像素格式（参看 jctrl_color_space_t ）。
- * @param [in ] jut_alpha  : JPEG 解码输出的像素为 RGB 32位时，填充的 ALPHA 通道值。
  * 
  * @return j_int_t : 错误码（参看 jdec_errno_table_t 相关枚举值）。
  * @retval JDEC_ERR_STRIDE : 

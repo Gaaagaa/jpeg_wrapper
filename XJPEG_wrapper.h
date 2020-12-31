@@ -60,13 +60,13 @@ typedef enum jpeg_color_space_t
 
 /**
  * @enum  jctrl_color_space_t
- * @brief JPEG 编码/解码 所操作的图像像素格式。
+ * @brief JPEG 编码/解码 所操作（输入/输出）的图像像素格式。
  * @note
  * 枚举值的 比特位 功能，定义如下：
  * - [  0 ~  7 ] : 用于表示每个像素所占的比特数，如 24，32 等值；
  * - [  8 ~ 15 ] : 用于标识小分类的类型，如区别 RGB24 与 BGR24；
- * - [ 16 ~ 23 ] : 用于区分颜色种类，如 RGB，YUV 等。
- * - [ 24 ~ 31 ] : 暂未使用。
+ * - [ 16 ~ 23 ] : 用于区分颜色种类，如 RGB，YCBCR 等。
+ * - [ 24 ~ 31 ] : 保留位。
  */
 typedef enum jctrl_color_space_t
 {
@@ -113,10 +113,75 @@ struct jenc_ctx_t;
 typedef struct jenc_ctx_t * jenc_ctxptr_t;
 
 /**
+ * @brief
+ * 用于合成 jenc_ctrlcs_t 枚举值，
+ * 即 jctrl_color_space_t 与 jpeg_color_space_t 的合成操作。
+ */
+#define JENC_CTRLCS_MAKE(jctrl, jcs)    ((jctrl) | ((jcs) << 24))
+
+/**
+ * @brief
+ * 从 jenc_ctrlcs_t 枚举值获取编码所操作的色彩空间值，
+ * 即 jctrl_color_space_t 值。
+ */
+#define JENC_CTRLCS_CTRL(jctrlcs)       ((jctrlcs) & 0x00FFFFFF)
+
+/**
+ * @brief
+ * 从 jenc_ctrlcs_t 枚举值获取编码所输出的色彩空间值，
+ * 即 jpeg_color_space_t 值。
+ */
+#define JENC_CTRLCS_JPEG(jctrlcs)       ((jctrlcs) >> 24)
+
+/**
+ * @enum  jenc_ctrlcs_t
+ * @brief JPEG 编码操作所支持的色彩空间转换枚举值。
+ */
+typedef enum jenc_ctrl_color_space_t
+{
+    JENC_CTRLCS_UNKNOW = 0x00000000, ///< 未定义的操作
+
+    JENC_RGB_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_GRAYSCALE), ///< RGB  => GRAY
+    JENC_BGR_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_GRAYSCALE), ///< BGR  => GRAY
+    JENC_RGBA_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_GRAYSCALE), ///< RGBA => GRAY ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_GRAYSCALE), ///< BGRA => GRAY ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_GRAYSCALE), ///< ARGB => GRAY ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_GRAYSCALE), ///< ABGR => GRAY ，忽略 ALPHA 通道值
+
+    JENC_RGB_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_RGB      ), ///< RGB  => RGB
+    JENC_BGR_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_RGB      ), ///< BGR  => RGB
+    JENC_RGBA_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_RGB      ), ///< RGBA => RGB ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_RGB      ), ///< BGRA => RGB ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_RGB      ), ///< ARGB => RGB ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_RGB      ), ///< ABGR => RGB ，忽略 ALPHA 通道值
+
+    JENC_RGB_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_YCbCr    ), ///< RGB  => YCbCr
+    JENC_BGR_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_YCbCr    ), ///< BGR  => YCbCr
+    JENC_RGBA_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_YCbCr    ), ///< RGBA => YCbCr ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_YCbCr    ), ///< BGRA => YCbCr ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_YCbCr    ), ///< ARGB => YCbCr ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_YCbCr    ), ///< ABGR => YCbCr ，忽略 ALPHA 通道值
+
+    JENC_RGB_TO_BGRGB  = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_BG_RGB   ), ///< RGB  => BG_RGB
+    JENC_BGR_TO_BGRGB  = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_BG_RGB   ), ///< BGR  => BG_RGB
+    JENC_RGBA_TO_BGRGB = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_BG_RGB   ), ///< RGBA => BG_RGB ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_BGRGB = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_BG_RGB   ), ///< BGRA => BG_RGB ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_BGRGB = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_BG_RGB   ), ///< ARGB => BG_RGB ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_BGRGB = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_BG_RGB   ), ///< ABGR => BG_RGB ，忽略 ALPHA 通道值
+
+    JENC_RGB_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_BG_YCC   ), ///< RGB  => BG_YCC
+    JENC_BGR_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_BG_YCC   ), ///< BGR  => BG_YCC
+    JENC_RGBA_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_BG_YCC   ), ///< RGBA => BG_YCC ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_BG_YCC   ), ///< BGRA => BG_YCC ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_BG_YCC   ), ///< ARGB => BG_YCC ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_BG_YCC   ), ///< ABGR => BG_YCC ，忽略 ALPHA 通道值
+} jenc_ctrlcs_t;
+
+/**
  * @enum  jenc_errno_table_t
  * @brief JPEG 编码操作的相关错误码表。
  */
-typedef enum __jenc_errno_table__
+typedef enum jenc_errno_table_t
 {
     JENC_ERR_OK             =  0,   ///< 无错
     JENC_ERR_UNKNOW         = -1,   ///< 未知错误
@@ -249,7 +314,7 @@ j_int_t jenc_config_dst(
  * @param [in ] jit_stride : RGB 图像数据 像素行 步进大小。
  * @param [in ] jit_width  : RGB 图像数据 宽度。
  * @param [in ] jit_height : RGB 图像数据 高度。
- * @param [in ] jit_ctrlcs : RGB 图像数据 像素格式（参看 jctrl_color_space_t）。
+ * @param [in ] jit_ctrlcs : 图像色彩空间的转换方式（参看 jenc_ctrlcs_t）。
  * 
  * @return j_int_t :
  * - 操作失败时，返回值 < 0，表示 错误码，参看 jenc_errno_table_t 相关枚举值。
