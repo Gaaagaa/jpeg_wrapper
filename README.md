@@ -156,7 +156,7 @@
     >   * @param [in ] jit_stride : RGB 图像数据 像素行 步进大小。
     >   * @param [in ] jit_width  : RGB 图像数据 宽度。
     >   * @param [in ] jit_height : RGB 图像数据 高度。
-    >   * @param [in ] jit_ctrlcs : RGB 图像数据 像素格式（参看 jctrl_color_space_t）。
+    >   * @param [in ] jit_ctrlcs : 图像色彩空间的转换方式（参看 jenc_ctrlcs_t）。
     >   * 
     >   * @return j_int_t :
     >   * - 操作失败时，返回值 < 0，表示 错误码，参看 jenc_errno_table_t 相关枚举值。
