@@ -73,9 +73,13 @@ static j_void_t lcpy_bgr2rgb(
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t jct_src = jct_iptr;
-    register j_mem_t jct_end = jct_iptr + 3 * jit_imgw;
-    register j_mem_t jct_dst = jct_optr;
+    register j_mem_t jct_src;
+    register j_mem_t jct_end;
+    register j_mem_t jct_dst;
+
+    jct_src = jct_iptr;
+    jct_end = jct_src + 3 * jit_imgw;
+    jct_dst = jct_optr;
 
     for (; jct_src != jct_end;)
     {
@@ -97,9 +101,13 @@ static j_void_t lcpy_bgra2rgb(
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t jct_src = jct_iptr;
-    register j_mem_t jct_end = jct_iptr + 4 * jit_imgw;
-    register j_mem_t jct_dst = jct_optr;
+    register j_mem_t jct_src;
+    register j_mem_t jct_end;
+    register j_mem_t jct_dst;
+
+    jct_src = jct_iptr;
+    jct_end = jct_src + 4 * jit_imgw;
+    jct_dst = jct_optr;
 
     for (; jct_src != jct_end;)
     {
@@ -121,9 +129,13 @@ static j_void_t lcpy_rgba2rgb(
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t jct_src = jct_iptr;
-    register j_mem_t jct_end = jct_iptr + 4 * jit_imgw;
-    register j_mem_t jct_dst = jct_optr;
+    register j_mem_t jct_src;
+    register j_mem_t jct_end;
+    register j_mem_t jct_dst;
+
+    jct_src = jct_iptr;
+    jct_end = jct_src + 4 * jit_imgw;
+    jct_dst = jct_optr;
 
     for (; jct_src != jct_end;)
     {
@@ -145,9 +157,13 @@ static j_void_t lcpy_abgr2rgb(
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t jct_src = jct_iptr;
-    register j_mem_t jct_end = jct_iptr + 4 * jit_imgw;
-    register j_mem_t jct_dst = jct_optr;
+    register j_mem_t jct_src;
+    register j_mem_t jct_end;
+    register j_mem_t jct_dst;
+
+    jct_src = jct_iptr;
+    jct_end = jct_src + 4 * jit_imgw;
+    jct_dst = jct_optr;
 
     for (; jct_src != jct_end;)
     {
@@ -169,9 +185,13 @@ static j_void_t lcpy_argb2rgb(
                     j_mem_t jct_iptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t jct_src = jct_iptr;
-    register j_mem_t jct_end = jct_iptr + 4 * jit_imgw;
-    register j_mem_t jct_dst = jct_optr;
+    register j_mem_t jct_src;
+    register j_mem_t jct_end;
+    register j_mem_t jct_dst;
+
+    jct_src = jct_iptr;
+    jct_end = jct_src + 4 * jit_imgw;
+    jct_dst = jct_optr;
 
     for (; jct_src != jct_end;)
     {
@@ -192,9 +212,12 @@ static j_void_t lcvt_bgr2rgb(
                     j_mem_t jct_mptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t   jct_src = jct_mptr;
-    register j_mem_t   jct_end = jct_mptr + 3 * jit_imgw;
+    register j_mem_t   jct_src;
+    register j_mem_t   jct_end;
     register j_uchar_t jct_xch;
+
+    jct_src = jct_mptr;
+    jct_end = jct_src + 3 * jit_imgw;
 
     for (; jct_src != jct_end;)
     {
@@ -215,10 +238,15 @@ static j_void_t lcvt_rgb2rgba(
                     j_uchar_t jct_alpha,
                     j_int_t   jit_imgw)
 {
-    register j_mem_t   jct_src = jct_mptr + 3 * jit_imgw - 1;
-    register j_mem_t   jct_end = jct_mptr - 1;
-    register j_mem_t   jct_dst = jct_mptr + 4 * jit_imgw - 1;
-    register j_uchar_t jct_alp = jct_alpha;
+    register j_mem_t   jct_src;
+    register j_mem_t   jct_end;
+    register j_mem_t   jct_dst;
+    register j_uchar_t jct_alp;
+
+    jct_end = jct_mptr - 1;
+    jct_src = jct_end + 3 * jit_imgw;
+    jct_dst = jct_src + jit_imgw;
+    jct_alp = jct_alpha;
 
     for (; jct_src != jct_end;)
     {
@@ -242,10 +270,15 @@ static j_void_t lcvt_rgb2bgra(
                     j_uchar_t jct_alpha,
                     j_int_t   jit_imgw)
 {
-    register j_mem_t   jct_src = jct_mptr + 3 * jit_imgw - 1;
-    register j_mem_t   jct_end = jct_mptr - 1;
-    register j_mem_t   jct_dst = jct_mptr + 4 * jit_imgw - 1;
-    register j_uchar_t jct_alp = jct_alpha;
+    register j_mem_t   jct_src;
+    register j_mem_t   jct_end;
+    register j_mem_t   jct_dst;
+    register j_uchar_t jct_alp;
+
+    jct_end = jct_mptr - 1;
+    jct_src = jct_end + 3 * jit_imgw;
+    jct_dst = jct_src + jit_imgw;
+    jct_alp = jct_alpha;
 
     for (; jct_src != jct_end;)
     {
@@ -269,10 +302,15 @@ static j_void_t lcvt_rgb2argb(
                     j_uchar_t jct_alpha,
                     j_int_t   jit_imgw)
 {
-    register j_mem_t   jct_src = jct_mptr + 3 * jit_imgw - 1;
-    register j_mem_t   jct_end = jct_mptr - 1;
-    register j_mem_t   jct_dst = jct_mptr + 4 * jit_imgw - 1;
-    register j_uchar_t jct_alp = jct_alpha;
+    register j_mem_t   jct_src;
+    register j_mem_t   jct_end;
+    register j_mem_t   jct_dst;
+    register j_uchar_t jct_alp;
+
+    jct_end = jct_mptr - 1;
+    jct_src = jct_end + 3 * jit_imgw;
+    jct_dst = jct_src + jit_imgw;
+    jct_alp = jct_alpha;
 
     for (; jct_src != jct_end;)
     {
@@ -295,10 +333,15 @@ static j_void_t lcvt_rgb2abgr(
                     j_uchar_t jct_alpha,
                     j_int_t   jit_imgw)
 {
-    register j_mem_t   jct_src = jct_mptr + 3 * jit_imgw - 1;
-    register j_mem_t   jct_end = jct_mptr - 1;
-    register j_mem_t   jct_dst = jct_mptr + 4 * jit_imgw - 1;
-    register j_uchar_t jct_alp = jct_alpha;
+    register j_mem_t   jct_src;
+    register j_mem_t   jct_end;
+    register j_mem_t   jct_dst;
+    register j_uchar_t jct_alp;
+
+    jct_end = jct_mptr - 1;
+    jct_src = jct_end + 3 * jit_imgw;
+    jct_dst = jct_src + jit_imgw;
+    jct_alp = jct_alpha;
 
     for (; jct_src != jct_end;)
     {
