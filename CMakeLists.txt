@@ -17,7 +17,7 @@ add_subdirectory(libjpeg)
 
 include_directories(libjpeg/inc)
 
-add_executable(test test.cpp XJPEG_wrapper.c)
-target_link_libraries(test libjpeg)
+add_executable(test_gray01 test/test_gray01.c XJPEG_wrapper.c)
+target_link_libraries(test_gray01 libjpeg)
 
 # ====================================================================
