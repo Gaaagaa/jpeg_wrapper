@@ -68,10 +68,10 @@ static inline j_uint_t jval_align(j_uint_t jut_val, j_uint_t jut_align)
 /**
  * @brief 像素行的 格式转换 拷贝操作： BGR 转成 RGB 。
  */
-static j_void_t lcpy_bgr2rgb(
-                    j_mem_t jct_optr,
-                    j_mem_t jct_iptr,
-                    j_int_t jit_imgw)
+static inline j_void_t lcpy_bgr2rgb(
+                            j_mem_t jct_optr,
+                            j_mem_t jct_iptr,
+                            j_int_t jit_imgw)
 {
     register j_mem_t jct_src;
     register j_mem_t jct_end;
@@ -96,10 +96,10 @@ static j_void_t lcpy_bgr2rgb(
 /**
  * @brief 像素行的 格式转换 拷贝操作： BGRA 转成 RGB 。
  */
-static j_void_t lcpy_bgra2rgb(
-                    j_mem_t jct_optr,
-                    j_mem_t jct_iptr,
-                    j_int_t jit_imgw)
+static inline j_void_t lcpy_bgra2rgb(
+                            j_mem_t jct_optr,
+                            j_mem_t jct_iptr,
+                            j_int_t jit_imgw)
 {
     register j_mem_t jct_src;
     register j_mem_t jct_end;
@@ -124,10 +124,10 @@ static j_void_t lcpy_bgra2rgb(
 /**
  * @brief 像素行的 格式转换 拷贝操作： RGBA 转成 RGB 。
  */
-static j_void_t lcpy_rgba2rgb(
-                    j_mem_t jct_optr,
-                    j_mem_t jct_iptr,
-                    j_int_t jit_imgw)
+static inline j_void_t lcpy_rgba2rgb(
+                            j_mem_t jct_optr,
+                            j_mem_t jct_iptr,
+                            j_int_t jit_imgw)
 {
     register j_mem_t jct_src;
     register j_mem_t jct_end;
@@ -152,10 +152,10 @@ static j_void_t lcpy_rgba2rgb(
 /**
  * @brief 像素行的 格式转换 拷贝操作： ABGR 转成 RGB 。
  */
-static j_void_t lcpy_abgr2rgb(
-                    j_mem_t jct_optr,
-                    j_mem_t jct_iptr,
-                    j_int_t jit_imgw)
+static inline j_void_t lcpy_abgr2rgb(
+                            j_mem_t jct_optr,
+                            j_mem_t jct_iptr,
+                            j_int_t jit_imgw)
 {
     register j_mem_t jct_src;
     register j_mem_t jct_end;
@@ -180,10 +180,10 @@ static j_void_t lcpy_abgr2rgb(
 /**
  * @brief 像素行的 格式转换 拷贝操作： ARGB 转成 RGB 。
  */
-static j_void_t lcpy_argb2rgb(
-                    j_mem_t jct_optr,
-                    j_mem_t jct_iptr,
-                    j_int_t jit_imgw)
+static inline j_void_t lcpy_argb2rgb(
+                            j_mem_t jct_optr,
+                            j_mem_t jct_iptr,
+                            j_int_t jit_imgw)
 {
     register j_mem_t jct_src;
     register j_mem_t jct_end;
@@ -208,7 +208,7 @@ static j_void_t lcpy_argb2rgb(
 /**
  * @brief 像素行的 格式转换 操作： BGR 转成 RGB 。
  */
-static j_void_t lcvt_bgr2rgb(
+static inline j_void_t lcvt_bgr2rgb(
                     j_mem_t jct_mptr,
                     j_int_t jit_imgw)
 {
@@ -233,10 +233,10 @@ static j_void_t lcvt_bgr2rgb(
 /**
  * @brief 像素行的 格式转换 操作： RGB 转成 RGBA 。
  */
-static j_void_t lcvt_rgb2rgba(
-                    j_mem_t   jct_mptr,
-                    j_uchar_t jct_alpha,
-                    j_int_t   jit_imgw)
+static inline j_void_t lcvt_rgb2rgba(
+                            j_mem_t   jct_mptr,
+                            j_uchar_t jct_alpha,
+                            j_int_t   jit_imgw)
 {
     register j_mem_t   jct_src;
     register j_mem_t   jct_end;
@@ -265,10 +265,10 @@ static j_void_t lcvt_rgb2rgba(
 /**
  * @brief 像素行的 格式转换 操作： RGB 转成 BGRA 。
  */
-static j_void_t lcvt_rgb2bgra(
-                    j_mem_t   jct_mptr,
-                    j_uchar_t jct_alpha,
-                    j_int_t   jit_imgw)
+static inline j_void_t lcvt_rgb2bgra(
+                            j_mem_t   jct_mptr,
+                            j_uchar_t jct_alpha,
+                            j_int_t   jit_imgw)
 {
     register j_mem_t   jct_src;
     register j_mem_t   jct_end;
@@ -297,10 +297,10 @@ static j_void_t lcvt_rgb2bgra(
 /**
  * @brief 像素行的 格式转换 操作： RGB 转成 ARGB 。
  */
-static j_void_t lcvt_rgb2argb(
-                    j_mem_t   jct_mptr,
-                    j_uchar_t jct_alpha,
-                    j_int_t   jit_imgw)
+static inline j_void_t lcvt_rgb2argb(
+                            j_mem_t   jct_mptr,
+                            j_uchar_t jct_alpha,
+                            j_int_t   jit_imgw)
 {
     register j_mem_t   jct_src;
     register j_mem_t   jct_end;
@@ -328,10 +328,10 @@ static j_void_t lcvt_rgb2argb(
 /**
  * @brief 像素行的 格式转换 操作： RGB 转成 ARGB 。
  */
-static j_void_t lcvt_rgb2abgr(
-                    j_mem_t   jct_mptr,
-                    j_uchar_t jct_alpha,
-                    j_int_t   jit_imgw)
+static inline j_void_t lcvt_rgb2abgr(
+                            j_mem_t   jct_mptr,
+                            j_uchar_t jct_alpha,
+                            j_int_t   jit_imgw)
 {
     register j_mem_t   jct_src;
     register j_mem_t   jct_end;
