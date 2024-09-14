@@ -59,11 +59,11 @@ j_void_t jerase_proc(void);
  */
 void usage(const char * xszt_name)
 {
-    printf("usage: %s -i input -o output -x xpos -y ypos -w width -h height [-c color]\n"
+    printf("usage: %s -i input -o output [-x xpos] [-y ypos] -w width -h height [-c color]\n"
            "       -i : input jpeg file.\n"
            "       -o : output jpeg file.\n"
-           "       -x : the x position of the erase area.\n"
-           "       -y : the y position of the erase area.\n"
+           "       -x : the x position of the erase area, default value: 0.\n"
+           "       -y : the y position of the erase area, default value: 0.\n"
            "       -w : the width of the erase area.\n"
            "       -h : the height of the erase area.\n"
            "       -c : the erase color, default value: 0x00FFFFFF.\n",
@@ -78,7 +78,7 @@ int main(int argc, char * argv[])
 {
     //======================================
 
-    if (argc < 13)
+    if (argc < 9)
     {
         usage(argv[0]);
         return -1;
