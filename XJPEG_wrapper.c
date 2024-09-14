@@ -1214,7 +1214,7 @@ typedef struct jdec_ctx_t
      * JPEG 解码输出数据（RGB数据）时，是否按 4 字节对齐。
      * 默认情况下，是按 4 字节对齐。
      */
-    j_bool_t jbt_align;
+    j_bool_t jbl_align;
 
     /**
      * @brief 
@@ -1555,15 +1555,21 @@ static j_int_t jdec_to_rgb(
         // 判断 行步进大小 是否满足解码输出要求
         if (0 == jit_stride)
         {
-            if (jdec_cptr->jbt_align)
+            if (jdec_cptr->jbl_align)
                 jit_stride = jval_align(jit_wlen, 4);
             else
                 jit_stride = jit_wlen;
         }
-        else if (jval_abs(jit_stride) < (j_int_t)jval_align(jit_wlen, 4))
+        else
         {
-            jit_err = JDEC_ERR_STRIDE;
-            break;
+            if (jval_abs(jit_stride) < 
+                (j_int_t)((jdec_cptr->jbl_align)  ? 
+                          jval_align(jit_wlen, 4) : 
+                          jval_abs(jit_wlen)))
+            {
+                jit_err = JDEC_ERR_STRIDE;
+                break;
+            }
         }
 
         // 判断输出 RGB24 数据缓存的容量大小是否足够
@@ -1704,7 +1710,7 @@ jdec_ctxptr_t jdec_alloc(j_void_t * jvt_reserved)
 
     jpeg_create_decompress(&jdec_cptr->j_decoder);
 
-    jdec_cptr->jbt_align = J_TRUE;
+    jdec_cptr->jbl_align = J_TRUE;
     jdec_cptr->jut_vpad  = 0xFFFFFFFF;
     jdec_cptr->jbt_rfio  = J_TRUE;
 
@@ -1759,9 +1765,9 @@ j_bool_t jdec_valid(jdec_ctxptr_t jdec_cptr)
  * @brief 设置解码输出数据（RGB数据）时，是否按 4 字节对齐。
  * @note  默认情况是按 4 字节对齐的。
  */
-j_void_t jdec_set_align(jdec_ctxptr_t jdec_cptr, j_bool_t jbt_align)
+j_void_t jdec_set_align(jdec_ctxptr_t jdec_cptr, j_bool_t jbl_align)
 {
-    jdec_cptr->jbt_align = jbt_align;
+    jdec_cptr->jbl_align = jbl_align;
 }
 
 /**********************************************************/

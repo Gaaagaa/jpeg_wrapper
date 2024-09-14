@@ -417,7 +417,7 @@ j_bool_t jdec_valid(jdec_ctxptr_t jdec_cptr);
  * @brief 设置解码输出数据（RGB数据）时，是否按 4 字节对齐。
  * @note  默认情况是按 4 字节对齐的。
  */
-j_void_t jdec_set_align(jdec_ctxptr_t jdec_cptr, j_bool_t jbt_align);
+j_void_t jdec_set_align(jdec_ctxptr_t jdec_cptr, j_bool_t jbl_align);
 
 /**********************************************************/
 /**
@@ -699,9 +699,9 @@ public:
      * @brief 设置解码输出数据（RGB数据）时，是否按 4 字节对齐。
      * @note  详情请参看 jdec_set_align() 的说明。
      */
-    inline j_void_t set_align(j_bool_t jbt_align)
+    inline j_void_t set_align(j_bool_t jbl_align)
     {
-        return jdec_set_align(m_jdec_cptr, jbt_align);
+        return jdec_set_align(m_jdec_cptr, jbl_align);
     }
 
     /**********************************************************/
