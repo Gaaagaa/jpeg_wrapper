@@ -370,9 +370,9 @@ j_void_t jerase_proc(void)
         for (jit_x = jit_l; jit_x < jit_r; ++jit_x)
         {
             jit_i = 3 * (jinfo_ctx.jit_width * jit_y + jit_x);
-            jmem_buf[jit_i + 0] = (j_uchar_t)((jut_eclr & 0x000000FF) >>  0); // B
-            jmem_buf[jit_i + 1] = (j_uchar_t)((jut_eclr & 0x0000FF00) >>  8); // G
-            jmem_buf[jit_i + 2] = (j_uchar_t)((jut_eclr & 0x00FF0000) >> 16); // R
+            jmem_buf[jit_i + 0] = (j_byte_t)((jut_eclr & 0x000000FF) >>  0); // B
+            jmem_buf[jit_i + 1] = (j_byte_t)((jut_eclr & 0x0000FF00) >>  8); // G
+            jmem_buf[jit_i + 2] = (j_byte_t)((jut_eclr & 0x00FF0000) >> 16); // R
         }
     }
 

@@ -69,26 +69,26 @@ static inline j_uint_t jval_align(j_uint_t jut_val, j_uint_t jut_align)
  * @brief 像素行的 格式转换 拷贝操作： BGR 转成 RGB 。
  */
 static inline j_void_t lcpy_bgr2rgb(
-                            j_mem_t jct_optr,
-                            j_mem_t jct_iptr,
+                            j_mem_t jmt_optr,
+                            j_mem_t jmt_iptr,
                             j_int_t jit_imgw)
 {
-    register j_mem_t jct_src;
-    register j_mem_t jct_end;
-    register j_mem_t jct_dst;
+    register j_mem_t jmt_src;
+    register j_mem_t jmt_end;
+    register j_mem_t jmt_dst;
 
-    jct_src = jct_iptr;
-    jct_end = jct_src + 3 * jit_imgw;
-    jct_dst = jct_optr;
+    jmt_src = jmt_iptr;
+    jmt_end = jmt_src + 3 * jit_imgw;
+    jmt_dst = jmt_optr;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst + 0) = *(jct_src + 2);
-        *(jct_dst + 1) = *(jct_src + 1);
-        *(jct_dst + 2) = *(jct_src + 0);
+        *(jmt_dst + 0) = *(jmt_src + 2);
+        *(jmt_dst + 1) = *(jmt_src + 1);
+        *(jmt_dst + 2) = *(jmt_src + 0);
 
-        jct_src += 3;
-        jct_dst += 3;
+        jmt_src += 3;
+        jmt_dst += 3;
     }
 }
 
@@ -97,26 +97,26 @@ static inline j_void_t lcpy_bgr2rgb(
  * @brief 像素行的 格式转换 拷贝操作： BGRA 转成 RGB 。
  */
 static inline j_void_t lcpy_bgra2rgb(
-                            j_mem_t jct_optr,
-                            j_mem_t jct_iptr,
+                            j_mem_t jmt_optr,
+                            j_mem_t jmt_iptr,
                             j_int_t jit_imgw)
 {
-    register j_mem_t jct_src;
-    register j_mem_t jct_end;
-    register j_mem_t jct_dst;
+    register j_mem_t jmt_src;
+    register j_mem_t jmt_end;
+    register j_mem_t jmt_dst;
 
-    jct_src = jct_iptr;
-    jct_end = jct_src + 4 * jit_imgw;
-    jct_dst = jct_optr;
+    jmt_src = jmt_iptr;
+    jmt_end = jmt_src + 4 * jit_imgw;
+    jmt_dst = jmt_optr;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst + 0) = *(jct_src + 2);
-        *(jct_dst + 1) = *(jct_src + 1);
-        *(jct_dst + 2) = *(jct_src + 0);
+        *(jmt_dst + 0) = *(jmt_src + 2);
+        *(jmt_dst + 1) = *(jmt_src + 1);
+        *(jmt_dst + 2) = *(jmt_src + 0);
 
-        jct_src += 4;
-        jct_dst += 3;
+        jmt_src += 4;
+        jmt_dst += 3;
     }
 }
 
@@ -125,26 +125,26 @@ static inline j_void_t lcpy_bgra2rgb(
  * @brief 像素行的 格式转换 拷贝操作： RGBA 转成 RGB 。
  */
 static inline j_void_t lcpy_rgba2rgb(
-                            j_mem_t jct_optr,
-                            j_mem_t jct_iptr,
+                            j_mem_t jmt_optr,
+                            j_mem_t jmt_iptr,
                             j_int_t jit_imgw)
 {
-    register j_mem_t jct_src;
-    register j_mem_t jct_end;
-    register j_mem_t jct_dst;
+    register j_mem_t jmt_src;
+    register j_mem_t jmt_end;
+    register j_mem_t jmt_dst;
 
-    jct_src = jct_iptr;
-    jct_end = jct_src + 4 * jit_imgw;
-    jct_dst = jct_optr;
+    jmt_src = jmt_iptr;
+    jmt_end = jmt_src + 4 * jit_imgw;
+    jmt_dst = jmt_optr;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst + 0) = *(jct_src + 0);
-        *(jct_dst + 1) = *(jct_src + 1);
-        *(jct_dst + 2) = *(jct_src + 2);
+        *(jmt_dst + 0) = *(jmt_src + 0);
+        *(jmt_dst + 1) = *(jmt_src + 1);
+        *(jmt_dst + 2) = *(jmt_src + 2);
 
-        jct_src += 4;
-        jct_dst += 3;
+        jmt_src += 4;
+        jmt_dst += 3;
     }
 }
 
@@ -153,26 +153,26 @@ static inline j_void_t lcpy_rgba2rgb(
  * @brief 像素行的 格式转换 拷贝操作： ABGR 转成 RGB 。
  */
 static inline j_void_t lcpy_abgr2rgb(
-                            j_mem_t jct_optr,
-                            j_mem_t jct_iptr,
+                            j_mem_t jmt_optr,
+                            j_mem_t jmt_iptr,
                             j_int_t jit_imgw)
 {
-    register j_mem_t jct_src;
-    register j_mem_t jct_end;
-    register j_mem_t jct_dst;
+    register j_mem_t jmt_src;
+    register j_mem_t jmt_end;
+    register j_mem_t jmt_dst;
 
-    jct_src = jct_iptr;
-    jct_end = jct_src + 4 * jit_imgw;
-    jct_dst = jct_optr;
+    jmt_src = jmt_iptr;
+    jmt_end = jmt_src + 4 * jit_imgw;
+    jmt_dst = jmt_optr;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst + 0) = *(jct_src + 3);
-        *(jct_dst + 1) = *(jct_src + 2);
-        *(jct_dst + 2) = *(jct_src + 1);
+        *(jmt_dst + 0) = *(jmt_src + 3);
+        *(jmt_dst + 1) = *(jmt_src + 2);
+        *(jmt_dst + 2) = *(jmt_src + 1);
 
-        jct_src += 4;
-        jct_dst += 3;
+        jmt_src += 4;
+        jmt_dst += 3;
     }
 }
 
@@ -181,26 +181,26 @@ static inline j_void_t lcpy_abgr2rgb(
  * @brief 像素行的 格式转换 拷贝操作： ARGB 转成 RGB 。
  */
 static inline j_void_t lcpy_argb2rgb(
-                            j_mem_t jct_optr,
-                            j_mem_t jct_iptr,
+                            j_mem_t jmt_optr,
+                            j_mem_t jmt_iptr,
                             j_int_t jit_imgw)
 {
-    register j_mem_t jct_src;
-    register j_mem_t jct_end;
-    register j_mem_t jct_dst;
+    register j_mem_t jmt_src;
+    register j_mem_t jmt_end;
+    register j_mem_t jmt_dst;
 
-    jct_src = jct_iptr;
-    jct_end = jct_src + 4 * jit_imgw;
-    jct_dst = jct_optr;
+    jmt_src = jmt_iptr;
+    jmt_end = jmt_src + 4 * jit_imgw;
+    jmt_dst = jmt_optr;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst + 0) = *(jct_src + 1);
-        *(jct_dst + 1) = *(jct_src + 2);
-        *(jct_dst + 2) = *(jct_src + 3);
+        *(jmt_dst + 0) = *(jmt_src + 1);
+        *(jmt_dst + 1) = *(jmt_src + 2);
+        *(jmt_dst + 2) = *(jmt_src + 3);
 
-        jct_src += 4;
-        jct_dst += 3;
+        jmt_src += 4;
+        jmt_dst += 3;
     }
 }
 
@@ -209,23 +209,23 @@ static inline j_void_t lcpy_argb2rgb(
  * @brief 像素行的 格式转换 操作： BGR 转成 RGB 。
  */
 static inline j_void_t lcvt_bgr2rgb(
-                    j_mem_t jct_mptr,
+                    j_mem_t jmt_mptr,
                     j_int_t jit_imgw)
 {
-    register j_mem_t   jct_src;
-    register j_mem_t   jct_end;
-    register j_uchar_t jct_xch;
+    register j_mem_t  jmt_src;
+    register j_mem_t  jmt_end;
+    register j_byte_t jbt_xch;
 
-    jct_src = jct_mptr;
-    jct_end = jct_src + 3 * jit_imgw;
+    jmt_src = jmt_mptr;
+    jmt_end = jmt_src + 3 * jit_imgw;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        jct_xch = *jct_src;
-        *jct_src = *(jct_src + 2);
-        *(jct_src + 2) = jct_xch;
+        jbt_xch = *jmt_src;
+        *jmt_src = *(jmt_src + 2);
+        *(jmt_src + 2) = jbt_xch;
 
-        jct_src += 3;
+        jmt_src += 3;
     }
 }
 
@@ -234,30 +234,30 @@ static inline j_void_t lcvt_bgr2rgb(
  * @brief 像素行的 格式转换 操作： RGB 转成 RGBA 。
  */
 static inline j_void_t lcvt_rgb2rgba(
-                            j_mem_t   jct_mptr,
-                            j_uchar_t jct_alpha,
-                            j_int_t   jit_imgw)
+                            j_mem_t  jmt_mptr,
+                            j_byte_t jbt_alpha,
+                            j_int_t  jit_imgw)
 {
-    register j_mem_t   jct_src;
-    register j_mem_t   jct_end;
-    register j_mem_t   jct_dst;
-    register j_uchar_t jct_alp;
+    register j_mem_t  jmt_src;
+    register j_mem_t  jmt_end;
+    register j_mem_t  jmt_dst;
+    register j_byte_t jbt_alp;
 
-    jct_end = jct_mptr - 1;
-    jct_src = jct_end + 3 * jit_imgw;
-    jct_dst = jct_src + jit_imgw;
-    jct_alp = jct_alpha;
+    jmt_end = jmt_mptr - 1;
+    jmt_src = jmt_end + 3 * jit_imgw;
+    jmt_dst = jmt_src + jit_imgw;
+    jbt_alp = jbt_alpha;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *jct_dst = jct_alp;
+        *jmt_dst = jbt_alp;
 
-        *(jct_dst - 1) = *(jct_src - 0);
-        *(jct_dst - 2) = *(jct_src - 1);
-        *(jct_dst - 3) = *(jct_src - 2);
+        *(jmt_dst - 1) = *(jmt_src - 0);
+        *(jmt_dst - 2) = *(jmt_src - 1);
+        *(jmt_dst - 3) = *(jmt_src - 2);
 
-        jct_src -= 3;
-        jct_dst -= 4;
+        jmt_src -= 3;
+        jmt_dst -= 4;
     }
 }
 
@@ -266,30 +266,30 @@ static inline j_void_t lcvt_rgb2rgba(
  * @brief 像素行的 格式转换 操作： RGB 转成 BGRA 。
  */
 static inline j_void_t lcvt_rgb2bgra(
-                            j_mem_t   jct_mptr,
-                            j_uchar_t jct_alpha,
-                            j_int_t   jit_imgw)
+                            j_mem_t  jmt_mptr,
+                            j_byte_t jbt_alpha,
+                            j_int_t  jit_imgw)
 {
-    register j_mem_t   jct_src;
-    register j_mem_t   jct_end;
-    register j_mem_t   jct_dst;
-    register j_uchar_t jct_alp;
+    register j_mem_t  jmt_src;
+    register j_mem_t  jmt_end;
+    register j_mem_t  jmt_dst;
+    register j_byte_t jbt_alp;
 
-    jct_end = jct_mptr - 1;
-    jct_src = jct_end + 3 * jit_imgw;
-    jct_dst = jct_src + jit_imgw;
-    jct_alp = jct_alpha;
+    jmt_end = jmt_mptr - 1;
+    jmt_src = jmt_end + 3 * jit_imgw;
+    jmt_dst = jmt_src + jit_imgw;
+    jbt_alp = jbt_alpha;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *jct_dst = jct_alp;
+        *jmt_dst = jbt_alp;
 
-        *(jct_dst - 1) = *(jct_src - 2);
-        *(jct_dst - 2) = *(jct_src - 1);
-        *(jct_dst - 3) = *(jct_src - 0);
+        *(jmt_dst - 1) = *(jmt_src - 2);
+        *(jmt_dst - 2) = *(jmt_src - 1);
+        *(jmt_dst - 3) = *(jmt_src - 0);
 
-        jct_src -= 3;
-        jct_dst -= 4;
+        jmt_src -= 3;
+        jmt_dst -= 4;
     }
 }
 
@@ -298,29 +298,29 @@ static inline j_void_t lcvt_rgb2bgra(
  * @brief 像素行的 格式转换 操作： RGB 转成 ARGB 。
  */
 static inline j_void_t lcvt_rgb2argb(
-                            j_mem_t   jct_mptr,
-                            j_uchar_t jct_alpha,
-                            j_int_t   jit_imgw)
+                            j_mem_t  jmt_mptr,
+                            j_byte_t jbt_alpha,
+                            j_int_t  jit_imgw)
 {
-    register j_mem_t   jct_src;
-    register j_mem_t   jct_end;
-    register j_mem_t   jct_dst;
-    register j_uchar_t jct_alp;
+    register j_mem_t  jmt_src;
+    register j_mem_t  jmt_end;
+    register j_mem_t  jmt_dst;
+    register j_byte_t jbt_alp;
 
-    jct_end = jct_mptr - 1;
-    jct_src = jct_end + 3 * jit_imgw;
-    jct_dst = jct_src + jit_imgw;
-    jct_alp = jct_alpha;
+    jmt_end = jmt_mptr - 1;
+    jmt_src = jmt_end + 3 * jit_imgw;
+    jmt_dst = jmt_src + jit_imgw;
+    jbt_alp = jbt_alpha;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst - 0) = *(jct_src - 0);
-        *(jct_dst - 1) = *(jct_src - 1);
-        *(jct_dst - 2) = *(jct_src - 2);
-        *(jct_dst - 3) = jct_alp;
+        *(jmt_dst - 0) = *(jmt_src - 0);
+        *(jmt_dst - 1) = *(jmt_src - 1);
+        *(jmt_dst - 2) = *(jmt_src - 2);
+        *(jmt_dst - 3) = jbt_alp;
 
-        jct_src -= 3;
-        jct_dst -= 4;
+        jmt_src -= 3;
+        jmt_dst -= 4;
     }
 }
 
@@ -329,29 +329,29 @@ static inline j_void_t lcvt_rgb2argb(
  * @brief 像素行的 格式转换 操作： RGB 转成 ARGB 。
  */
 static inline j_void_t lcvt_rgb2abgr(
-                            j_mem_t   jct_mptr,
-                            j_uchar_t jct_alpha,
-                            j_int_t   jit_imgw)
+                            j_mem_t  jmt_mptr,
+                            j_byte_t jbt_alpha,
+                            j_int_t  jit_imgw)
 {
-    register j_mem_t   jct_src;
-    register j_mem_t   jct_end;
-    register j_mem_t   jct_dst;
-    register j_uchar_t jct_alp;
+    register j_mem_t  jmt_src;
+    register j_mem_t  jmt_end;
+    register j_mem_t  jmt_dst;
+    register j_byte_t jmt_alp;
 
-    jct_end = jct_mptr - 1;
-    jct_src = jct_end + 3 * jit_imgw;
-    jct_dst = jct_src + jit_imgw;
-    jct_alp = jct_alpha;
+    jmt_end = jmt_mptr - 1;
+    jmt_src = jmt_end + 3 * jit_imgw;
+    jmt_dst = jmt_src + jit_imgw;
+    jmt_alp = jbt_alpha;
 
-    for (; jct_src != jct_end;)
+    for (; jmt_src != jmt_end;)
     {
-        *(jct_dst - 0) = *(jct_src - 2);
-        *(jct_dst - 1) = *(jct_src - 1);
-        *(jct_dst - 2) = *(jct_src - 0);
-        *(jct_dst - 3) = jct_alp;
+        *(jmt_dst - 0) = *(jmt_src - 2);
+        *(jmt_dst - 1) = *(jmt_src - 1);
+        *(jmt_dst - 2) = *(jmt_src - 0);
+        *(jmt_dst - 3) = jmt_alp;
 
-        jct_src -= 3;
-        jct_dst -= 4;
+        jmt_src -= 3;
+        jmt_dst -= 4;
     }
 }
 
@@ -561,11 +561,11 @@ static j_int_t jenc_from_rgb(
     j_int_t jit_err = JENC_ERR_UNKNOW;
     jpeg_encoder_t * jcs_ptr = &jenc_cptr->j_encoder;
 
-    j_mem_t  jct_mptr = jpeg_dptr->Jmem_dptr;
+    j_mem_t  jmt_mptr = jpeg_dptr->Jmem_dptr;
     j_size_t jst_size = jpeg_dptr->jst_msize;
 
     /* 用于 RGB 数据的 像素行 遍历操作 */
-    j_mem_t  jct_lptr = jmem_iptr;
+    j_mem_t  jmt_lptr = jmem_iptr;
 
     /* 判断 输出源 是否为 文件流模式 */
     j_bool_t jbt_ufio =
@@ -633,7 +633,7 @@ static j_int_t jenc_from_rgb(
 
             jenc_cptr->jline.jut_mlen = (j_uint_t)jval_abs(3 * jit_width);
             jenc_cptr->jline.jmem_ptr =
-                (j_mem_t)calloc(jenc_cptr->jline.jut_mlen, sizeof(j_uchar_t));
+                (j_mem_t)calloc(jenc_cptr->jline.jut_mlen, sizeof(j_byte_t));
         }
 
         if (J_NULL == jenc_cptr->jline.jmem_ptr)
@@ -647,7 +647,7 @@ static j_int_t jenc_from_rgb(
         if (jbt_ufio)
             jpeg_stdio_dest(jcs_ptr, jpeg_dptr->Jfio_dptr);
         else
-            jpeg_mem_dest(jcs_ptr, &jct_mptr, &jst_size);
+            jpeg_mem_dest(jcs_ptr, &jmt_mptr, &jst_size);
 
         jcs_ptr->image_width      = jit_width;
         jcs_ptr->image_height     = jit_height;
@@ -686,8 +686,8 @@ static j_int_t jenc_from_rgb(
         case JCTRL_CS_RGB:
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
-                jpeg_write_scanlines(jcs_ptr, &jct_lptr, 1);
-                jct_lptr += jit_stride;
+                jpeg_write_scanlines(jcs_ptr, &jmt_lptr, 1);
+                jmt_lptr += jit_stride;
             }
             break;
 
@@ -695,9 +695,9 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_bgr2rgb(
-                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
-                jct_lptr += jit_stride;
+                jmt_lptr += jit_stride;
             }
             break;
 
@@ -705,9 +705,9 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_rgba2rgb(
-                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
-                jct_lptr += jit_stride;
+                jmt_lptr += jit_stride;
             }
             break;
 
@@ -715,9 +715,9 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_bgra2rgb(
-                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
-                jct_lptr += jit_stride;
+                jmt_lptr += jit_stride;
             }
             break;
 
@@ -725,9 +725,9 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_argb2rgb(
-                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
-                jct_lptr += jit_stride;
+                jmt_lptr += jit_stride;
             }
             break;
 
@@ -735,9 +735,9 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_abgr2rgb(
-                    jenc_cptr->jline.jmem_ptr, jct_lptr, jit_width);
+                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
                 jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
-                jct_lptr += jit_stride;
+                jmt_lptr += jit_stride;
             }
             break;
 
@@ -760,7 +760,7 @@ static j_int_t jenc_from_rgb(
         //======================================
         // 输出源 为 内存 模式
 
-        if (jct_mptr != jpeg_dptr->Jmem_dptr)
+        if (jmt_mptr != jpeg_dptr->Jmem_dptr)
         {
             // 若 解码器 内部重新分配了数据输出缓存，
             // 则将这些缓存信息保存到上下文中（方便后续操作）
@@ -768,7 +768,7 @@ static j_int_t jenc_from_rgb(
             if (J_NULL != jenc_cptr->jcached.jmem_ptr)
                 free(jenc_cptr->jcached.jmem_ptr);
 
-            jenc_cptr->jcached.jmem_ptr = jct_mptr;
+            jenc_cptr->jcached.jmem_ptr = jmt_mptr;
             jenc_cptr->jcached.jut_size = (j_uint_t)jst_size;
             jenc_cptr->jcached.jut_mlen =
                 (j_uint_t)(jst_size + jcs_ptr->dest->free_in_buffer);
@@ -1460,10 +1460,10 @@ static j_int_t jdec_to_rgb(
                 j_int_t     * jit_height,
                 j_int_t       jit_ctrlcs)
 {
-    j_int_t   jit_err   = JDEC_ERR_UNKNOW;
-    j_mem_t   jct_mptr  = jmem_optr;
-    j_int_t   jit_wlen  = 0;
-    j_uchar_t jct_alpha = (j_uchar_t)jdec_cptr->jut_vpad;
+    j_int_t  jit_err   = JDEC_ERR_UNKNOW;
+    j_mem_t  jmt_mptr  = jmem_optr;
+    j_int_t  jit_wlen  = 0;
+    j_byte_t jbt_alpha = (j_byte_t)jdec_cptr->jut_vpad;
 
     jpeg_decoder_t * jds_ptr = &jdec_cptr->j_decoder;
 
@@ -1591,65 +1591,65 @@ static j_int_t jdec_to_rgb(
         case JCTRL_CS_RGB:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
-                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
-                jct_mptr += jit_stride;
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jmt_mptr, 1);
+                jmt_mptr += jit_stride;
             }
             break;
 
         case JCTRL_CS_BGR:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
-                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
-                lcvt_bgr2rgb(jct_mptr, (j_int_t)jds_ptr->output_width);
-                jct_mptr += jit_stride;
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jmt_mptr, 1);
+                lcvt_bgr2rgb(jmt_mptr, (j_int_t)jds_ptr->output_width);
+                jmt_mptr += jit_stride;
             }
             break;
 
         case JCTRL_CS_RGBA:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
-                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jmt_mptr, 1);
                 lcvt_rgb2rgba(
-                            jct_mptr,
-                            jct_alpha,
+                            jmt_mptr,
+                            jbt_alpha,
                             jds_ptr->output_width);
-                jct_mptr += jit_stride;
+                jmt_mptr += jit_stride;
             }
             break;
 
         case JCTRL_CS_BGRA:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
-                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jmt_mptr, 1);
                 lcvt_rgb2bgra(
-                            jct_mptr,
-                            jct_alpha,
+                            jmt_mptr,
+                            jbt_alpha,
                             jds_ptr->output_width);
-                jct_mptr += jit_stride;
+                jmt_mptr += jit_stride;
             }
             break;
 
         case JCTRL_CS_ARGB:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
-                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jmt_mptr, 1);
                 lcvt_rgb2argb(
-                            jct_mptr,
-                            jct_alpha,
+                            jmt_mptr,
+                            jbt_alpha,
                             jds_ptr->output_width);
-                jct_mptr += jit_stride;
+                jmt_mptr += jit_stride;
             }
             break;
 
         case JCTRL_CS_ABGR:
             while (jds_ptr->output_scanline < jds_ptr->output_height)
             {
-                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jct_mptr, 1);
+                jpeg_read_scanlines(jds_ptr, (JSAMPARRAY)&jmt_mptr, 1);
                 lcvt_rgb2abgr(
-                            jct_mptr,
-                            jct_alpha,
+                            jmt_mptr,
+                            jbt_alpha,
                             jds_ptr->output_width);
-                jct_mptr += jit_stride;
+                jmt_mptr += jit_stride;
             }
             break;
 

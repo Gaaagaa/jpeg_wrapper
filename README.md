@@ -87,7 +87,7 @@
     >  typedef long            j_long_t;
     >  typedef unsigned int    j_uint_t;
     >  typedef unsigned long   j_ulong_t;
-    >  typedef unsigned char   j_uchar_t;
+    >  typedef unsigned char   j_byte_t;
     >  typedef unsigned int    j_bool_t;
     >  
     >  typedef size_t          j_size_t;
