@@ -620,7 +620,7 @@ static j_int_t jenc_from_rgb(
         if (0 != setjmp(jenc_cptr->j_err_mgr.j_jmpbuf))
         {
             jit_err = JENC_ERR_EXCEPTION;
-            goto __EXIT_FUNC__;
+            goto __EXIT_FUNC;
         }
 
         //======================================
@@ -798,7 +798,7 @@ static j_int_t jenc_from_rgb(
         jit_err = (j_int_t)jst_size;
     } while (0);
 
-__EXIT_FUNC__:
+__EXIT_FUNC:
     if (J_NULL != jcs_ptr)
     {
         jpeg_abort_compress(jcs_ptr);
@@ -1372,7 +1372,7 @@ static j_int_t jdec_info(
         if (0 != setjmp(jdec_cptr->j_err_mgr.j_jmpbuf))
         {
             jit_err = JDEC_ERR_EXCEPTION;
-            goto __EXIT_FUNC__;
+            goto __EXIT_FUNC;
         }
 
         //======================================
@@ -1414,7 +1414,7 @@ static j_int_t jdec_info(
         jit_err = JDEC_ERR_OK;
     } while (0);
 
-__EXIT_FUNC__:
+__EXIT_FUNC:
     if (J_NULL != jds_ptr)
     {
         jpeg_abort_decompress(jds_ptr);
@@ -1505,7 +1505,7 @@ static j_int_t jdec_to_rgb(
         if (0 != setjmp(jdec_cptr->j_err_mgr.j_jmpbuf))
         {
             jit_err = JDEC_ERR_EXCEPTION;
-            goto __EXIT_FUNC__;
+            goto __EXIT_FUNC;
         }
 
         //======================================
@@ -1665,7 +1665,7 @@ static j_int_t jdec_to_rgb(
         jit_err = JDEC_ERR_OK;
     } while (0);
 
-__EXIT_FUNC__:
+__EXIT_FUNC:
     if (J_NULL != jds_ptr)
     {
         jpeg_abort_decompress(jds_ptr);
