@@ -265,7 +265,7 @@ j_bool_t jenc_is_rfio(jenc_ctxptr_t jenc_cptr);
 /**
  * @brief 设置 文件流模式 时，是否自动重置 文件指针。
  */
-j_void_t jenc_set_rfio(jenc_ctxptr_t jenc_cptr, j_bool_t jbt_rfio);
+j_void_t jenc_set_rfio(jenc_ctxptr_t jenc_cptr, j_bool_t jbl_rfio);
 
 /**********************************************************/
 /**
@@ -438,7 +438,7 @@ j_bool_t jdec_is_rfio(jdec_ctxptr_t jdec_cptr);
 /**
  * @brief 设置 文件流模式 时，是否自动重置 文件指针。
  */
-j_void_t jdec_set_rfio(jdec_ctxptr_t jdec_cptr, j_bool_t jbt_rfio);
+j_void_t jdec_set_rfio(jdec_ctxptr_t jdec_cptr, j_bool_t jbl_rfio);
 
 /**********************************************************/
 /**
@@ -592,9 +592,9 @@ public:
      * @brief 设置 文件流模式 时，是否自动重置 文件指针。
      * @note 详情请参看 jenc_set_rfio() 的说明。
      */
-    inline j_void_t set_rfio(j_bool_t jbt_rfio)
+    inline j_void_t set_rfio(j_bool_t jbl_rfio)
     {
-        jenc_set_rfio(m_jenc_cptr, jbt_rfio);
+        jenc_set_rfio(m_jenc_cptr, jbl_rfio);
     }
 
     /**********************************************************/
@@ -731,9 +731,9 @@ public:
      * @brief 设置 文件流模式 时，是否自动重置 文件指针。
      * @note  详情请参看 jdec_set_rfio() 的说明。
      */
-    inline j_void_t set_rfio(j_bool_t jbt_rfio)
+    inline j_void_t set_rfio(j_bool_t jbl_rfio)
     {
-        jdec_set_rfio(m_jdec_cptr, jbt_rfio);
+        jdec_set_rfio(m_jdec_cptr, jbl_rfio);
     }
 
     /**********************************************************/

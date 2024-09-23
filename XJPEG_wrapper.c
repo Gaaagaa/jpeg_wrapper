@@ -390,7 +390,7 @@ typedef struct jenc_ctx_t
      * JPEG 编码输出源使用 文件流模式 时，是否自动重置 文件指针。
      * 默认情况下，其值为 J_TRUE，操作文件流后，会自动还原原文件指针位置。
      */
-    j_bool_t jbt_rfio;
+    j_bool_t jbl_rfio;
 
     /**
      * @brief 
@@ -411,9 +411,12 @@ typedef struct jenc_ctx_t
      */
     struct
     {
-        j_mem_t       jmem_ptr;  ///< 缓存地址
-        j_uint_t      jut_mlen;  ///< 缓存容量
-    } jline;
+        j_mem_t     * jar_lines; ///< 各行缓存数组
+        j_uint_t      jut_lsize; ///< 行总数量（数组大小）
+
+        j_mem_t       jmem_ptr;  ///< 用于像素转换操作的缓存 地址
+        j_uint_t      jut_mlen;  ///< 用于像素转换操作的缓存 大小
+    } jlines;
 
     /**
      * @brief 
@@ -568,7 +571,7 @@ static j_int_t jenc_from_rgb(
     j_mem_t  jmt_lptr = jmem_iptr;
 
     /* 判断 输出源 是否为 文件流模式 */
-    j_bool_t jbt_ufio =
+    j_bool_t jbl_ufio =
         ((0 == jpeg_dptr->jst_msize) && (J_NULL != jpeg_dptr->Jfio_dptr));
 
     do 
@@ -626,17 +629,17 @@ static j_int_t jenc_from_rgb(
         //======================================
 
         // 设置交换缓存
-        if (jenc_cptr->jline.jut_mlen < (j_uint_t)jval_abs(3 * jit_width))
+        if (jenc_cptr->jlines.jut_mlen < (j_uint_t)jval_abs(3 * jit_width))
         {
-            if (J_NULL != jenc_cptr->jline.jmem_ptr)
-                free(jenc_cptr->jline.jmem_ptr);
+            if (J_NULL != jenc_cptr->jlines.jmem_ptr)
+                free(jenc_cptr->jlines.jmem_ptr);
 
-            jenc_cptr->jline.jut_mlen = (j_uint_t)jval_abs(3 * jit_width);
-            jenc_cptr->jline.jmem_ptr =
-                (j_mem_t)calloc(jenc_cptr->jline.jut_mlen, sizeof(j_byte_t));
+            jenc_cptr->jlines.jut_mlen = (j_uint_t)jval_abs(3 * jit_width);
+            jenc_cptr->jlines.jmem_ptr =
+                (j_mem_t)calloc(jenc_cptr->jlines.jut_mlen, sizeof(j_byte_t));
         }
 
-        if (J_NULL == jenc_cptr->jline.jmem_ptr)
+        if (J_NULL == jenc_cptr->jlines.jmem_ptr)
         {
             jit_err = JENC_ERR_ALLOC_MEM;
             break;
@@ -644,7 +647,7 @@ static j_int_t jenc_from_rgb(
 
         //======================================
 
-        if (jbt_ufio)
+        if (jbl_ufio)
             jpeg_stdio_dest(jcs_ptr, jpeg_dptr->Jfio_dptr);
         else
             jpeg_mem_dest(jcs_ptr, &jmt_mptr, &jst_size);
@@ -695,8 +698,8 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_bgr2rgb(
-                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
-                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                    jenc_cptr->jlines.jmem_ptr, jmt_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jlines.jmem_ptr, 1);
                 jmt_lptr += jit_stride;
             }
             break;
@@ -705,8 +708,8 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_rgba2rgb(
-                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
-                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                    jenc_cptr->jlines.jmem_ptr, jmt_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jlines.jmem_ptr, 1);
                 jmt_lptr += jit_stride;
             }
             break;
@@ -715,8 +718,8 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_bgra2rgb(
-                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
-                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                    jenc_cptr->jlines.jmem_ptr, jmt_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jlines.jmem_ptr, 1);
                 jmt_lptr += jit_stride;
             }
             break;
@@ -725,8 +728,8 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_argb2rgb(
-                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
-                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                    jenc_cptr->jlines.jmem_ptr, jmt_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jlines.jmem_ptr, 1);
                 jmt_lptr += jit_stride;
             }
             break;
@@ -735,8 +738,8 @@ static j_int_t jenc_from_rgb(
             while (jcs_ptr->next_scanline < jcs_ptr->image_height)
             {
                 lcpy_abgr2rgb(
-                    jenc_cptr->jline.jmem_ptr, jmt_lptr, jit_width);
-                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jline.jmem_ptr, 1);
+                    jenc_cptr->jlines.jmem_ptr, jmt_lptr, jit_width);
+                jpeg_write_scanlines(jcs_ptr, &jenc_cptr->jlines.jmem_ptr, 1);
                 jmt_lptr += jit_stride;
             }
             break;
@@ -751,7 +754,7 @@ static j_int_t jenc_from_rgb(
         // 输出源 为 文件流 模式
 
         // 直接返回 JENC_ERR_OK
-        if (jbt_ufio)
+        if (jbl_ufio)
         {
             jit_err = JENC_ERR_OK;
             break;
@@ -836,14 +839,16 @@ jenc_ctxptr_t jenc_alloc(j_void_t * jvt_reserved)
     jenc_cptr->jut_size = sizeof(jenc_ctx_t);
     jenc_cptr->jit_type = JENC_HANDLE_TYPE;
     jenc_cptr->jit_encq = JENC_DEF_QUALITY;
-    jenc_cptr->jbt_rfio = J_TRUE;
+    jenc_cptr->jbl_rfio = J_TRUE;
 
     jenc_cptr->jdst.jit_mode = JCTRL_MODE_UNKNOW;
     jenc_cptr->jdst.jht_optr = J_NULL;
     jenc_cptr->jdst.jut_mlen = 0;
 
-    jenc_cptr->jline.jmem_ptr = J_NULL;
-    jenc_cptr->jline.jut_mlen = 0;
+    jenc_cptr->jlines.jar_lines = J_NULL;
+    jenc_cptr->jlines.jut_lsize = 0;
+    jenc_cptr->jlines.jmem_ptr  = J_NULL;
+    jenc_cptr->jlines.jut_mlen  = 0;
 
     jenc_cptr->jcached.jmem_ptr = J_NULL;
     jenc_cptr->jcached.jut_size = 0;
@@ -871,12 +876,12 @@ j_void_t jenc_release(jenc_ctxptr_t jenc_cptr)
     {
         jpeg_destroy_compress(&jenc_cptr->j_encoder);
 
-        if (J_NULL != jenc_cptr->jline.jmem_ptr)
+        if (J_NULL != jenc_cptr->jlines.jmem_ptr)
         {
-            free(jenc_cptr->jline.jmem_ptr);
+            free(jenc_cptr->jlines.jmem_ptr);
 
-            jenc_cptr->jline.jmem_ptr = J_NULL;
-            jenc_cptr->jline.jut_mlen = 0;
+            jenc_cptr->jlines.jmem_ptr = J_NULL;
+            jenc_cptr->jlines.jut_mlen = 0;
         }
 
         if (J_NULL != jenc_cptr->jcached.jmem_ptr)
@@ -949,16 +954,16 @@ j_void_t jenc_set_quality(jenc_ctxptr_t jenc_cptr, j_int_t jit_quality)
  */
 j_bool_t jenc_is_rfio(jenc_ctxptr_t jenc_cptr)
 {
-    return jenc_cptr->jbt_rfio;
+    return jenc_cptr->jbl_rfio;
 }
 
 /**********************************************************/
 /**
  * @brief 设置 文件流模式 时，是否自动重置 文件指针。
  */
-j_void_t jenc_set_rfio(jenc_ctxptr_t jenc_cptr, j_bool_t jbt_rfio)
+j_void_t jenc_set_rfio(jenc_ctxptr_t jenc_cptr, j_bool_t jbl_rfio)
 {
-    jenc_cptr->jbt_rfio = jbt_rfio;
+    jenc_cptr->jbl_rfio = jbl_rfio;
 }
 
 /**********************************************************/
@@ -1140,7 +1145,7 @@ j_int_t jenc_rgb_to_dst(
         }
 
         if ((JCTRL_MODE_FIO == jenc_cptr->jdst.jit_mode) &&
-            jenc_cptr->jbt_rfio)
+            jenc_cptr->jbl_rfio)
         {
             if (0 != fgetpos(jenc_dst.Jfio_dptr, &jpos_fio))
             {
@@ -1169,7 +1174,7 @@ j_int_t jenc_rgb_to_dst(
             fclose((j_fio_t)jenc_dst.Jfio_dptr);
         }
         else if ((JCTRL_MODE_FIO == jenc_cptr->jdst.jit_mode) &&
-                 jenc_cptr->jbt_rfio)
+                 jenc_cptr->jbl_rfio)
         {
             fsetpos(jenc_dst.Jfio_dptr, &jpos_fio);
         }
@@ -1228,7 +1233,7 @@ typedef struct jdec_ctx_t
      * JPEG 解码输入源使用 文件流模式 时，是否自动重置 文件指针。
      * 默认情况下，其值为 J_TRUE，操作文件流后，会自动还原原文件指针位置。
      */
-    j_bool_t jbt_rfio;
+    j_bool_t jbl_rfio;
 
     /**
      * @brief 
@@ -1712,7 +1717,7 @@ jdec_ctxptr_t jdec_alloc(j_void_t * jvt_reserved)
 
     jdec_cptr->jbl_align = J_TRUE;
     jdec_cptr->jut_vpad  = 0xFFFFFFFF;
-    jdec_cptr->jbt_rfio  = J_TRUE;
+    jdec_cptr->jbl_rfio  = J_TRUE;
 
     jdec_cptr->jsrc.jit_mode = JCTRL_MODE_UNKNOW;
     jdec_cptr->jsrc.jht_iptr = J_NULL;
@@ -1788,16 +1793,16 @@ j_void_t jdec_set_vpad(jdec_ctxptr_t jdec_cptr, j_uint_t jut_vpad)
  */
 j_bool_t jdec_is_rfio(jdec_ctxptr_t jdec_cptr)
 {
-    return jdec_cptr->jbt_rfio;
+    return jdec_cptr->jbl_rfio;
 }
 
 /**********************************************************/
 /**
  * @brief 设置 文件流模式 时，是否自动重置 文件指针。
  */
-j_void_t jdec_set_rfio(jdec_ctxptr_t jdec_cptr, j_bool_t jbt_rfio)
+j_void_t jdec_set_rfio(jdec_ctxptr_t jdec_cptr, j_bool_t jbl_rfio)
 {
-    jdec_cptr->jbt_rfio = jbt_rfio;
+    jdec_cptr->jbl_rfio = jbl_rfio;
 }
 
 /**********************************************************/
@@ -1906,7 +1911,7 @@ j_int_t jdec_src_info(
         }
 
         if ((JCTRL_MODE_FIO == jdec_cptr->jsrc.jit_mode) &&
-            jdec_cptr->jbt_rfio)
+            jdec_cptr->jbl_rfio)
         {
             if (0 != fgetpos(jdec_src.Jfio_sptr, &jpos_fio))
             {
@@ -1928,7 +1933,7 @@ j_int_t jdec_src_info(
             fclose(jdec_src.Jfio_sptr);
         }
         else if ((JCTRL_MODE_FIO == jdec_cptr->jsrc.jit_mode) &&
-                 jdec_cptr->jbt_rfio)
+                 jdec_cptr->jbl_rfio)
         {
             fsetpos(jdec_src.Jfio_sptr, &jpos_fio);
         }
@@ -2023,7 +2028,7 @@ j_int_t jdec_src_to_rgb(
         }
 
         if ((JCTRL_MODE_FIO == jdec_cptr->jsrc.jit_mode) &&
-            jdec_cptr->jbt_rfio)
+            jdec_cptr->jbl_rfio)
         {
             if (0 != fgetpos(jdec_src.Jfio_sptr, &jpos_fio))
             {
@@ -2054,7 +2059,7 @@ j_int_t jdec_src_to_rgb(
             fclose(jdec_src.Jfio_sptr);
         }
         else if ((JCTRL_MODE_FIO == jdec_cptr->jsrc.jit_mode) &&
-                 jdec_cptr->jbt_rfio)
+                 jdec_cptr->jbl_rfio)
         {
             fsetpos(jdec_src.Jfio_sptr, &jpos_fio);
         }
