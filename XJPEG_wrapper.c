@@ -534,13 +534,13 @@ static j_int_t jenc_query_dst(jenc_ctxptr_t jenc_cptr, jpeg_dstptr_t jpeg_dptr)
 /**
  * @brief 将 RGB 图像像素数据编码为 JPEG 数据流。
  * 
- * @param [in ] jenc_cptr   : JPEG 编码操作的上下文对象。
- * @param [out] jpeg_dptr   : JPEG 数据输出源。
- * @param [in ] jmem_iptr   : RGB 图像数据 缓存。
- * @param [in ] jit_stride  : RGB 图像数据 像素行 步进大小。
- * @param [in ] jit_width   : RGB 图像数据 宽度。
- * @param [in ] jit_height  : RGB 图像数据 高度。
- * @param [in ] jit_ctrlcs  : 图像色彩空间的转换方式（参看 jenc_ctrlcs_t）。
+ * @param [in ] jenc_cptr  : JPEG 编码操作的上下文对象。
+ * @param [out] jpeg_dptr  : JPEG 数据输出源。
+ * @param [in ] jmem_iptr  : RGB 图像数据 缓存。
+ * @param [in ] jit_stride : RGB 图像数据 像素行 步进大小。
+ * @param [in ] jit_width  : RGB 图像数据 宽度。
+ * @param [in ] jit_height : RGB 图像数据 高度。
+ * @param [in ] jit_ctrlcs : 图像色彩空间的转换方式（参看 jenc_ctrlcs_t）。
  * 
  * @return j_int_t : 
  * - 操作失败时，返回值 < 0，表示 错误码，
@@ -652,8 +652,8 @@ static j_int_t jenc_from_rgb(
         else
             jpeg_mem_dest(jcs_ptr, &jmt_mptr, &jst_size);
 
-        jcs_ptr->image_width      = jit_width;
-        jcs_ptr->image_height     = jit_height;
+        jcs_ptr->image_width  = jit_width;
+        jcs_ptr->image_height = jit_height;
         if (JCTRL_CS_GRAY == JENC_CTRLCS_CTRL(jit_ctrlcs))
         {
             jcs_ptr->input_components = 1;
@@ -666,7 +666,7 @@ static j_int_t jenc_from_rgb(
         }
 
         jpeg_set_defaults(jcs_ptr);
-        jpeg_set_quality(jcs_ptr, jenc_cptr->jit_encq, 1);
+        jpeg_set_quality(jcs_ptr, jenc_cptr->jit_encq, J_TRUE);
 
         switch (JENC_CTRLCS_JPEG(jit_ctrlcs))
         {
@@ -681,7 +681,7 @@ static j_int_t jenc_from_rgb(
 
         //======================================
 
-        jpeg_start_compress(jcs_ptr, 1);
+        jpeg_start_compress(jcs_ptr, J_TRUE);
 
         switch (JENC_CTRLCS_CTRL(jit_ctrlcs))
         {
@@ -765,7 +765,7 @@ static j_int_t jenc_from_rgb(
 
         if (jmt_mptr != jpeg_dptr->Jmem_dptr)
         {
-            // 若 解码器 内部重新分配了数据输出缓存，
+            // 若 编码器 内部重新分配了数据输出缓存，
             // 则将这些缓存信息保存到上下文中（方便后续操作）
 
             if (J_NULL != jenc_cptr->jcached.jmem_ptr)
@@ -791,7 +791,7 @@ static j_int_t jenc_from_rgb(
         }
         else
         {
-            // 解码器由始至终都将 JPEG 数据输出到 输出源 的缓存中，
+            // 编码器由始至终都将 JPEG 数据输出到 输出源 的缓存中，
             // 则将 上下文内部缓存 的 有效字节数重置
 
             jenc_cptr->jcached.jut_size = 0;
@@ -875,6 +875,14 @@ j_void_t jenc_release(jenc_ctxptr_t jenc_cptr)
     if (jenc_valid(jenc_cptr))
     {
         jpeg_destroy_compress(&jenc_cptr->j_encoder);
+
+        if (J_NULL != jenc_cptr->jlines.jar_lines)
+        {
+            free(jenc_cptr->jlines.jar_lines);
+
+            jenc_cptr->jlines.jar_lines = J_NULL;
+            jenc_cptr->jlines.jut_lsize = 0;
+        }
 
         if (J_NULL != jenc_cptr->jlines.jmem_ptr)
         {
