@@ -135,7 +135,7 @@ x_int32_t               xit_height;
 
 x_int32_t dec_to_buf(x_cstring_t xszt_file, j_int_t jit_ctrlcs)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     xit_err = jdecoder.config_src(JCTRL_MODE_FILE, (j_handle_t)xszt_file, 0);
     if (JDEC_ERR_OK != xit_err)
@@ -178,7 +178,7 @@ x_int32_t dec_to_buf(x_cstring_t xszt_file, j_int_t jit_ctrlcs)
 
 x_int32_t enc_to_file(x_cstring_t xszt_file, j_int_t jit_ctrlcs)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     xit_err = jencoder.config_dst(JCTRL_MODE_FILE, (j_handle_t)xszt_file, 0);
     if (JDEC_ERR_OK != xit_err)

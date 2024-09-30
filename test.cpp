@@ -130,21 +130,21 @@ x_int32_t xit_rgbxx  = JCTRL_CS_RGB;
 // 解码操作相关的变量
 
 jdec_handle_t jdecoder;
-x_int32_t     xit_dmode = JCTRL_MODE_UNKNOW;
+x_int32_t     xit_dmode = JCTRL_MODE_UNKNOWN;
 std::string   xstr_input;
 
 //======================================
 // 编码操作相关的变量
 
 jenc_handle_t jencoder;
-x_int32_t     xit_emode = JCTRL_MODE_UNKNOW;
+x_int32_t     xit_emode = JCTRL_MODE_UNKNOWN;
 std::string   xstr_output;
 
 //======================================
 
 x_int32_t dec_mode_mem(void)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     printf("[dec_mode_mem]\n");
 
@@ -155,7 +155,7 @@ x_int32_t dec_mode_mem(void)
     if (!xfr_stream.is_open())
     {
         printf("open input file [%s] error!", xstr_input.c_str());
-        return X_ERR_UNKNOW;
+        return X_ERR_UNKNOWN;
     }
 
     x_uint32_t xut_size = 4 * 1024 * 1024;
@@ -165,13 +165,13 @@ x_int32_t dec_mode_mem(void)
     if (xut_size <= 0)
     {
         printf("input file [%s] read() return 0!\n", xstr_input.c_str());
-        return X_ERR_UNKNOW;
+        return X_ERR_UNKNOWN;
     }
 
     if (!xfr_stream.eof())
     {
         printf("input file [%s] size > 4 MB !\n", xstr_input.c_str());
-        return X_ERR_UNKNOW;
+        return X_ERR_UNKNOWN;
     }
 
     xfr_stream.close();
@@ -233,7 +233,7 @@ x_int32_t dec_mode_mem(void)
 
 x_int32_t dec_mode_fio(void)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     printf("[dec_mode_fio]\n");
 
@@ -244,7 +244,7 @@ x_int32_t dec_mode_fio(void)
     if (J_NULL == jfio_ptr)
     {
         printf("fopen([%s], \"rb\") failed!\n", xstr_input.c_str());
-        return X_ERR_UNKNOW;
+        return X_ERR_UNKNOWN;
     }
 
     //======================================
@@ -305,7 +305,7 @@ x_int32_t dec_mode_fio(void)
 
 x_int32_t dec_mode_file(void)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     printf("[dec_mode_file]\n");
 
@@ -362,7 +362,7 @@ x_int32_t dec_mode_file(void)
 
 x_int32_t enc_mode_mem(void)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     printf("[enc_mode_mem]\n");
 
@@ -425,7 +425,7 @@ x_int32_t enc_mode_mem(void)
     if (!ofw_stream.is_open())
     {
         printf("open output file [%s] error!\n", xstr_output.c_str());
-        return X_ERR_UNKNOW;
+        return X_ERR_UNKNOWN;
     }
 
     ofw_stream.write((x_char_t *)jencoder.cached_data(), jencoder.cached_size());
@@ -440,7 +440,7 @@ x_int32_t enc_mode_mem(void)
 
 x_int32_t enc_mode_fio(void)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     printf("[enc_mode_fio]\n");
 
@@ -451,7 +451,7 @@ x_int32_t enc_mode_fio(void)
     if (J_NULL == jfio_ptr)
     {
         printf("fopen([%s], \"wb+\") error!\n", xstr_output.c_str());
-        return X_ERR_UNKNOW;
+        return X_ERR_UNKNOWN;
     }
 
     xit_err = jencoder.config_dst(JCTRL_MODE_FIO, (j_handle_t)jfio_ptr, 0);
@@ -520,7 +520,7 @@ x_int32_t enc_mode_fio(void)
 
 x_int32_t enc_mode_file(void)
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     printf("[enc_mode_file]\n");
 
@@ -601,7 +601,7 @@ x_int32_t get_mode(x_cstring_t xszt_mode)
         return JCTRL_MODE_FIO;
     if (0 == xstr_icmp(xszt_mode, "file"))
         return JCTRL_MODE_FILE;
-    return JCTRL_MODE_UNKNOW;
+    return JCTRL_MODE_UNKNOWN;
 }
 
 x_int32_t get_rgbxx(x_cstring_t xszt_rgbxx)
@@ -618,7 +618,7 @@ x_int32_t get_rgbxx(x_cstring_t xszt_rgbxx)
         return JCTRL_CS_ARGB;
     if (0 == xstr_icmp(xszt_rgbxx, "abgr"))
         return JCTRL_CS_ABGR;
-    return JCTRL_CS_UNKNOW;
+    return JCTRL_CS_UNKNOWN;
 }
 
 #ifndef TEST_ONLY_ONE
@@ -627,7 +627,7 @@ int main(int argc, char argv[ARGS_LIST_LEN][ARGS_TEXT_LEN])
 int main(int argc, char * argv[])
 #endif // TEST_ONLY_ONE
 {
-    x_int32_t xit_err = X_ERR_UNKNOW;
+    x_int32_t xit_err = X_ERR_UNKNOWN;
 
     //======================================
 
@@ -641,7 +641,7 @@ int main(int argc, char * argv[])
     // 解析输入参数
 
     xit_dmode = get_mode(argv[1]);
-    if (JCTRL_MODE_UNKNOW == xit_dmode)
+    if (JCTRL_MODE_UNKNOWN == xit_dmode)
     {
         usage();
         printf("args < decode mode: %s > error!\n", argv[1]);
@@ -651,7 +651,7 @@ int main(int argc, char * argv[])
     xstr_input = argv[2];
 
     xit_emode = get_mode(argv[3]);
-    if (JCTRL_MODE_UNKNOW == xit_emode)
+    if (JCTRL_MODE_UNKNOWN == xit_emode)
     {
         usage();
         printf("args < encode mode: %s > error!\n", argv[3]);
@@ -663,7 +663,7 @@ int main(int argc, char * argv[])
     if (argc >= 6)
     {
         xit_rgbxx = get_rgbxx(argv[5]);
-        if (JCTRL_CS_UNKNOW == xit_rgbxx)
+        if (JCTRL_CS_UNKNOWN == xit_rgbxx)
         {
             usage();
             printf("args [ rgb: %s ] error! use default rgb.\n", argv[6]);
@@ -679,7 +679,7 @@ int main(int argc, char * argv[])
     case JCTRL_MODE_MEM : xit_err = dec_mode_mem (); break;
     case JCTRL_MODE_FIO : xit_err = dec_mode_fio (); break;
     case JCTRL_MODE_FILE: xit_err = dec_mode_file(); break;
-    default: xit_err = X_ERR_UNKNOW; break;
+    default: xit_err = X_ERR_UNKNOWN; break;
     }
     if (X_ERR_OK != xit_err)
     {
@@ -695,7 +695,7 @@ int main(int argc, char * argv[])
     case JCTRL_MODE_MEM : xit_err = enc_mode_mem (); break;
     case JCTRL_MODE_FIO : xit_err = enc_mode_fio (); break;
     case JCTRL_MODE_FILE: xit_err = enc_mode_file(); break;
-    default: xit_err = X_ERR_UNKNOW; break;
+    default: xit_err = X_ERR_UNKNOWN; break;
     }
     if (X_ERR_OK != xit_err)
     {

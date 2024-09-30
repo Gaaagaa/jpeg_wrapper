@@ -38,7 +38,7 @@ j_int_t jpeg_decode(
             j_uint_t      jut_size,
             jinfo_ptr_t   jinfo_ptr)
 {
-    j_int_t jit_errno = JDEC_ERR_UNKNOW;
+    j_int_t jit_errno = JDEC_ERR_UNKNOWN;
 
     do
     {
@@ -108,7 +108,7 @@ int main(int argc, char * argv[])
 {
     j_cstring_t jsz_ifile  = J_NULL;
     j_cstring_t jsz_ofile  = J_NULL;
-    j_int_t     jit_ctrlcs = JCTRL_CS_UNKNOW;
+    j_int_t     jit_ctrlcs = JCTRL_CS_UNKNOWN;
 
     jdec_ctxptr_t jdec_cptr = J_NULL;
     jenc_ctxptr_t jenc_cptr = J_NULL;

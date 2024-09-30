@@ -70,14 +70,14 @@ typedef enum jpeg_color_space_t
  */
 typedef enum jctrl_color_space_t
 {
-    JCTRL_CS_UNKNOW = 0x00000000, ///< 未知格式
-    JCTRL_CS_GRAY   = 0x00010008, ///< GRAY 8位 格式，即 灰度图
-    JCTRL_CS_RGB    = 0x00010118, ///< RGB 24位 格式，顺序为 RGB
-    JCTRL_CS_BGR    = 0x00010218, ///< RGB 24位 格式，顺序为 BGR
-    JCTRL_CS_RGBA   = 0x00010120, ///< RGB 32位 格式，顺序为 RGBA，编码时忽略 ALPHA 通道值
-    JCTRL_CS_BGRA   = 0x00010220, ///< RGB 32位 格式，顺序为 BGRA，编码时忽略 ALPHA 通道值
-    JCTRL_CS_ARGB   = 0x00010320, ///< RGB 32位 格式，顺序为 ARGB，编码时忽略 ALPHA 通道值
-    JCTRL_CS_ABGR   = 0x00010420, ///< RGB 32位 格式，顺序为 ABGR，编码时忽略 ALPHA 通道值
+    JCTRL_CS_UNKNOWN = 0x00000000, ///< 未知格式
+    JCTRL_CS_GRAY    = 0x00010008, ///< GRAY 8位 格式，即 灰度图
+    JCTRL_CS_RGB     = 0x00010118, ///< RGB 24位 格式，顺序为 RGB
+    JCTRL_CS_BGR     = 0x00010218, ///< RGB 24位 格式，顺序为 BGR
+    JCTRL_CS_RGBA    = 0x00010120, ///< RGB 32位 格式，顺序为 RGBA，编码时忽略 ALPHA 通道值
+    JCTRL_CS_BGRA    = 0x00010220, ///< RGB 32位 格式，顺序为 BGRA，编码时忽略 ALPHA 通道值
+    JCTRL_CS_ARGB    = 0x00010320, ///< RGB 32位 格式，顺序为 ARGB，编码时忽略 ALPHA 通道值
+    JCTRL_CS_ABGR    = 0x00010420, ///< RGB 32位 格式，顺序为 ABGR，编码时忽略 ALPHA 通道值
 } jctrl_color_space_t;
 
 /**
@@ -86,10 +86,10 @@ typedef enum jctrl_color_space_t
  */
 typedef enum jctrl_mode_t
 {
-    JCTRL_MODE_UNKNOW,   ///< 未知模式
-    JCTRL_MODE_MEM   ,   ///< 内存模式
-    JCTRL_MODE_FIO   ,   ///< 文件流模式
-    JCTRL_MODE_FILE  ,   ///< 文件模式
+    JCTRL_MODE_UNKNOWN,   ///< 未知模式
+    JCTRL_MODE_MEM    ,   ///< 内存模式
+    JCTRL_MODE_FIO    ,   ///< 文件流模式
+    JCTRL_MODE_FILE   ,   ///< 文件模式
 } jctrl_mode_t;
 
 /**
@@ -140,39 +140,39 @@ typedef struct jenc_ctx_t * jenc_ctxptr_t;
  */
 typedef enum jenc_ctrl_color_space_t
 {
-    JENC_CTRLCS_UNKNOW = 0x00000000, ///< 未定义的操作
+    JENC_CTRLCS_UNKNOWN = 0x00000000, ///< 未定义的操作
 
-    JENC_GRAY_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_GRAYSCALE), ///< GRAY => GRAY
-    JENC_RGB_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_GRAYSCALE), ///< RGB  => GRAY
-    JENC_BGR_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_GRAYSCALE), ///< BGR  => GRAY
-    JENC_RGBA_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_GRAYSCALE), ///< RGBA => GRAY ，忽略 ALPHA 通道值
-    JENC_BGRA_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_GRAYSCALE), ///< BGRA => GRAY ，忽略 ALPHA 通道值
-    JENC_ARGB_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_GRAYSCALE), ///< ARGB => GRAY ，忽略 ALPHA 通道值
-    JENC_ABGR_TO_GRAY  = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_GRAYSCALE), ///< ABGR => GRAY ，忽略 ALPHA 通道值
+    JENC_GRAY_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_GRAYSCALE), ///< GRAY => GRAY
+    JENC_RGB_TO_GRAY    = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_GRAYSCALE), ///< RGB  => GRAY
+    JENC_BGR_TO_GRAY    = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_GRAYSCALE), ///< BGR  => GRAY
+    JENC_RGBA_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_GRAYSCALE), ///< RGBA => GRAY ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_GRAYSCALE), ///< BGRA => GRAY ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_GRAYSCALE), ///< ARGB => GRAY ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_GRAY   = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_GRAYSCALE), ///< ABGR => GRAY ，忽略 ALPHA 通道值
 
-    JENC_GRAY_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_RGB      ), ///< GRAY => RGB
-    JENC_RGB_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_RGB      ), ///< RGB  => RGB
-    JENC_BGR_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_RGB      ), ///< BGR  => RGB
-    JENC_RGBA_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_RGB      ), ///< RGBA => RGB ，忽略 ALPHA 通道值
-    JENC_BGRA_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_RGB      ), ///< BGRA => RGB ，忽略 ALPHA 通道值
-    JENC_ARGB_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_RGB      ), ///< ARGB => RGB ，忽略 ALPHA 通道值
-    JENC_ABGR_TO_RGB   = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_RGB      ), ///< ABGR => RGB ，忽略 ALPHA 通道值
+    JENC_GRAY_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_RGB      ), ///< GRAY => RGB
+    JENC_RGB_TO_RGB     = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_RGB      ), ///< RGB  => RGB
+    JENC_BGR_TO_RGB     = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_RGB      ), ///< BGR  => RGB
+    JENC_RGBA_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_RGB      ), ///< RGBA => RGB ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_RGB      ), ///< BGRA => RGB ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_RGB      ), ///< ARGB => RGB ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_RGB    = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_RGB      ), ///< ABGR => RGB ，忽略 ALPHA 通道值
 
-    JENC_GRAY_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_YCbCr    ), ///< GRAY => YCbCr
-    JENC_RGB_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_YCbCr    ), ///< RGB  => YCbCr
-    JENC_BGR_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_YCbCr    ), ///< BGR  => YCbCr
-    JENC_RGBA_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_YCbCr    ), ///< RGBA => YCbCr ，忽略 ALPHA 通道值
-    JENC_BGRA_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_YCbCr    ), ///< BGRA => YCbCr ，忽略 ALPHA 通道值
-    JENC_ARGB_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_YCbCr    ), ///< ARGB => YCbCr ，忽略 ALPHA 通道值
-    JENC_ABGR_TO_YCC   = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_YCbCr    ), ///< ABGR => YCbCr ，忽略 ALPHA 通道值
+    JENC_GRAY_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_YCbCr    ), ///< GRAY => YCbCr
+    JENC_RGB_TO_YCC     = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_YCbCr    ), ///< RGB  => YCbCr
+    JENC_BGR_TO_YCC     = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_YCbCr    ), ///< BGR  => YCbCr
+    JENC_RGBA_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_YCbCr    ), ///< RGBA => YCbCr ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_YCbCr    ), ///< BGRA => YCbCr ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_YCbCr    ), ///< ARGB => YCbCr ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_YCC    = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_YCbCr    ), ///< ABGR => YCbCr ，忽略 ALPHA 通道值
 
-    JENC_GRAY_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_BG_YCC   ), ///< GRAY => BG_YCC
-    JENC_RGB_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_BG_YCC   ), ///< RGB  => BG_YCC
-    JENC_BGR_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_BG_YCC   ), ///< BGR  => BG_YCC
-    JENC_RGBA_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_BG_YCC   ), ///< RGBA => BG_YCC ，忽略 ALPHA 通道值
-    JENC_BGRA_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_BG_YCC   ), ///< BGRA => BG_YCC ，忽略 ALPHA 通道值
-    JENC_ARGB_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_BG_YCC   ), ///< ARGB => BG_YCC ，忽略 ALPHA 通道值
-    JENC_ABGR_TO_BGYCC = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_BG_YCC   ), ///< ABGR => BG_YCC ，忽略 ALPHA 通道值
+    JENC_GRAY_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_GRAY, JPEG_CS_BG_YCC   ), ///< GRAY => BG_YCC
+    JENC_RGB_TO_BGYCC   = JENC_CTRLCS_MAKE(JCTRL_CS_RGB , JPEG_CS_BG_YCC   ), ///< RGB  => BG_YCC
+    JENC_BGR_TO_BGYCC   = JENC_CTRLCS_MAKE(JCTRL_CS_BGR , JPEG_CS_BG_YCC   ), ///< BGR  => BG_YCC
+    JENC_RGBA_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_RGBA, JPEG_CS_BG_YCC   ), ///< RGBA => BG_YCC ，忽略 ALPHA 通道值
+    JENC_BGRA_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_BGRA, JPEG_CS_BG_YCC   ), ///< BGRA => BG_YCC ，忽略 ALPHA 通道值
+    JENC_ARGB_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_ARGB, JPEG_CS_BG_YCC   ), ///< ARGB => BG_YCC ，忽略 ALPHA 通道值
+    JENC_ABGR_TO_BGYCC  = JENC_CTRLCS_MAKE(JCTRL_CS_ABGR, JPEG_CS_BG_YCC   ), ///< ABGR => BG_YCC ，忽略 ALPHA 通道值
 } jenc_ctrlcs_t;
 
 /**
@@ -182,7 +182,7 @@ typedef enum jenc_ctrl_color_space_t
 typedef enum jenc_errno_table_t
 {
     JENC_ERR_OK             =  0,   ///< 无错
-    JENC_ERR_UNKNOW         = -1,   ///< 未知错误
+    JENC_ERR_UNKNOWN        = -1,   ///< 未知错误
     JENC_ERR_INVALID_CTXPTR = -2,   ///< JPEG 编码操作的上下文对象无效
     JENC_ERR_INVALID_PARAM  = -3,   ///< 输入参数有误
     JENC_ERR_INVALID_DST    = -4,   ///< JPEG 编码的 数据输出源 未配置
@@ -203,7 +203,7 @@ static inline j_cstring_t jenc_errno_name(j_int_t jit_err)
     switch (jit_err)
     {
     case JENC_ERR_OK             : jszt_name = "JENC_ERR_OK"            ; break;
-    case JENC_ERR_UNKNOW         : jszt_name = "JENC_ERR_UNKNOW"        ; break;
+    case JENC_ERR_UNKNOWN        : jszt_name = "JENC_ERR_UNKNOWN"       ; break;
     case JENC_ERR_INVALID_CTXPTR : jszt_name = "JENC_ERR_INVALID_CTXPTR"; break;
     case JENC_ERR_INVALID_PARAM  : jszt_name = "JENC_ERR_INVALID_PARAM" ; break;
     case JENC_ERR_INVALID_DST    : jszt_name = "JENC_ERR_INVALID_DST"   ; break;
@@ -347,7 +347,7 @@ typedef struct jdec_ctx_t * jdec_ctxptr_t;
 typedef enum __jdec_errno_table__
 {
     JDEC_ERR_OK             =   0,   ///< 无错
-    JDEC_ERR_UNKNOW         = - 1,   ///< 未知错误
+    JDEC_ERR_UNKNOWN        = - 1,   ///< 未知错误
     JDEC_ERR_INVALID_CTXPTR = - 2,   ///< JPEG 解码操作的上下文对象无效
     JDEC_ERR_INVALID_PARAM  = - 3,   ///< 输入参数有误
     JDEC_ERR_INVALID_SRC    = - 4,   ///< JPEG 解码的输入源 未配置
@@ -371,7 +371,7 @@ static inline j_cstring_t jdec_errno_name(j_int_t jit_err)
     switch (jit_err)
     {
     case JDEC_ERR_OK             : jszt_name = "JDEC_ERR_OK"            ; break;
-    case JDEC_ERR_UNKNOW         : jszt_name = "JDEC_ERR_UNKNOW"        ; break;
+    case JDEC_ERR_UNKNOWN        : jszt_name = "JDEC_ERR_UNKNOWN"       ; break;
     case JDEC_ERR_INVALID_CTXPTR : jszt_name = "JDEC_ERR_INVALID_CTXPTR"; break;
     case JDEC_ERR_INVALID_PARAM  : jszt_name = "JDEC_ERR_INVALID_PARAM" ; break;
     case JDEC_ERR_INVALID_SRC    : jszt_name = "JDEC_ERR_INVALID_SRC"   ; break;

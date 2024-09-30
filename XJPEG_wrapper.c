@@ -561,7 +561,7 @@ static j_int_t jenc_from_rgb(
                 j_int_t       jit_height,
                 j_int_t       jit_ctrlcs)
 {
-    j_int_t jit_err = JENC_ERR_UNKNOW;
+    j_int_t jit_err = JENC_ERR_UNKNOWN;
     jpeg_encoder_t * jcs_ptr = &jenc_cptr->j_encoder;
 
     j_mem_t  jmt_mptr = jpeg_dptr->Jmem_dptr;
@@ -603,15 +603,15 @@ static j_int_t jenc_from_rgb(
             case JPEG_CS_YCbCr    :
             case JPEG_CS_BG_YCC   :                
                 break;
-            default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
+            default: jit_ctrlcs = JENC_CTRLCS_UNKNOWN;
                 break;
             }
             break;
-        default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
+        default: jit_ctrlcs = JENC_CTRLCS_UNKNOWN;
             break;
         }
 
-        if (JENC_CTRLCS_UNKNOW == jit_ctrlcs)
+        if (JENC_CTRLCS_UNKNOWN == jit_ctrlcs)
         {
             jit_err = JENC_ERR_INVALID_PARAM;
             break;
@@ -841,7 +841,7 @@ jenc_ctxptr_t jenc_alloc(j_void_t * jvt_reserved)
     jenc_cptr->jit_encq = JENC_DEF_QUALITY;
     jenc_cptr->jbl_rfio = J_TRUE;
 
-    jenc_cptr->jdst.jit_mode = JCTRL_MODE_UNKNOW;
+    jenc_cptr->jdst.jit_mode = JCTRL_MODE_UNKNOWN;
     jenc_cptr->jdst.jht_optr = J_NULL;
     jenc_cptr->jdst.jut_mlen = 0;
 
@@ -1095,7 +1095,7 @@ j_int_t jenc_rgb_to_dst(
                 j_int_t       jit_height,
                 j_int_t       jit_ctrlcs)
 {
-    j_int_t jit_err = JENC_ERR_UNKNOW;
+    j_int_t jit_err = JENC_ERR_UNKNOWN;
 
     jpeg_dst_t jenc_dst;
     j_fpos_t   jpos_fio;
@@ -1129,15 +1129,15 @@ j_int_t jenc_rgb_to_dst(
             case JPEG_CS_YCbCr    :
             case JPEG_CS_BG_YCC   :
                 break;
-            default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
+            default: jit_ctrlcs = JENC_CTRLCS_UNKNOWN;
                 break;
             }
             break;
-        default: jit_ctrlcs = JENC_CTRLCS_UNKNOW;
+        default: jit_ctrlcs = JENC_CTRLCS_UNKNOWN;
             break;
         }
 
-        if (JENC_CTRLCS_UNKNOW == jit_ctrlcs)
+        if (JENC_CTRLCS_UNKNOWN == jit_ctrlcs)
         {
             jit_err = JENC_ERR_INVALID_PARAM;
             break;
@@ -1365,7 +1365,7 @@ static j_int_t jdec_info(
                 jpeg_srcptr_t jpeg_sptr,
                 jinfo_ptr_t   jinfo_ptr)
 {
-    j_int_t jit_err = JDEC_ERR_UNKNOW;
+    j_int_t jit_err = JDEC_ERR_UNKNOWN;
     jpeg_decoder_t * jds_ptr = &jdec_cptr->j_decoder;
 
     do 
@@ -1473,7 +1473,7 @@ static j_int_t jdec_to_rgb(
                 j_int_t     * jit_height,
                 j_int_t       jit_ctrlcs)
 {
-    j_int_t  jit_err   = JDEC_ERR_UNKNOW;
+    j_int_t  jit_err   = JDEC_ERR_UNKNOWN;
     j_mem_t  jmt_mptr  = jmem_optr;
     j_int_t  jit_wlen  = 0;
     j_byte_t jbt_alpha = (j_byte_t)jdec_cptr->jut_vpad;
@@ -1502,11 +1502,11 @@ static j_int_t jdec_to_rgb(
         case JCTRL_CS_ARGB:
         case JCTRL_CS_ABGR:
             break;
-        default: jit_ctrlcs = JCTRL_CS_UNKNOW;
+        default: jit_ctrlcs = JCTRL_CS_UNKNOWN;
             break;
         }
 
-        if (JCTRL_CS_UNKNOW == jit_ctrlcs)
+        if (JCTRL_CS_UNKNOWN == jit_ctrlcs)
         {
             jit_err = JDEC_ERR_INVALID_PARAM;
             break;
@@ -1537,7 +1537,7 @@ static j_int_t jdec_to_rgb(
 
         // 设置解码输出的色彩空间，libjpeg.txt 文档中，只支持
         // YCbCr, BG_YCC, GRAYSCALE, RGB 这几种模式转 RGB
-        jit_err = JDEC_ERR_UNKNOW;
+        jit_err = JDEC_ERR_UNKNOWN;
         switch (jds_ptr->jpeg_color_space)
         {
         case JCS_GRAYSCALE:
@@ -1727,7 +1727,7 @@ jdec_ctxptr_t jdec_alloc(j_void_t * jvt_reserved)
     jdec_cptr->jut_vpad  = 0xFFFFFFFF;
     jdec_cptr->jbl_rfio  = J_TRUE;
 
-    jdec_cptr->jsrc.jit_mode = JCTRL_MODE_UNKNOW;
+    jdec_cptr->jsrc.jit_mode = JCTRL_MODE_UNKNOWN;
     jdec_cptr->jsrc.jht_iptr = J_NULL;
     jdec_cptr->jsrc.jut_size = 0;
 
@@ -1893,7 +1893,7 @@ j_int_t jdec_src_info(
                 jdec_ctxptr_t jdec_cptr,
                 jinfo_ptr_t   jinfo_ptr)
 {
-    j_int_t jit_err = JDEC_ERR_UNKNOW;
+    j_int_t jit_err = JDEC_ERR_UNKNOWN;
 
     jpeg_src_t jdec_src;
     j_fpos_t   jpos_fio;
@@ -1990,7 +1990,7 @@ j_int_t jdec_src_to_rgb(
                 j_int_t     * jit_height,
                 j_int_t       jit_ctrlcs)
 {
-    j_int_t jit_err = JDEC_ERR_UNKNOW;
+    j_int_t jit_err = JDEC_ERR_UNKNOWN;
 
     jpeg_src_t jdec_src;
     j_fpos_t   jpos_fio;
@@ -2016,11 +2016,11 @@ j_int_t jdec_src_to_rgb(
         case JCTRL_CS_ARGB:
         case JCTRL_CS_ABGR:
             break;
-        default: jit_ctrlcs = JCTRL_CS_UNKNOW;
+        default: jit_ctrlcs = JCTRL_CS_UNKNOWN;
             break;
         }
 
-        if (JCTRL_CS_UNKNOW == jit_ctrlcs)
+        if (JCTRL_CS_UNKNOWN == jit_ctrlcs)
         {
             jit_err = JDEC_ERR_INVALID_PARAM;
             break;

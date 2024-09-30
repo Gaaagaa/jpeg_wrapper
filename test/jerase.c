@@ -156,7 +156,7 @@ j_int_t jpeg_decode(
             j_int_t     * jit_size,
             jinfo_ptr_t   jinfo_ptr)
 {
-    j_int_t jit_errno = JDEC_ERR_UNKNOW;
+    j_int_t jit_errno = JDEC_ERR_UNKNOWN;
 
     do
     {

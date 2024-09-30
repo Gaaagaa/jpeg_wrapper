@@ -116,7 +116,7 @@ typedef x_uint64_t             x_errno_t;
 #define X_TRUE                1
 #define X_NULL                0
 #define X_ERR_OK              0
-#define X_ERR_UNKNOW          (-1)
+#define X_ERR_UNKNOWN         (-1)
 
 #define XERR_SUCCEED(xeno)    (X_ERR_OK == (xeno))
 #define XERR_FAILED(xeno)     (X_ERR_OK != (xeno))
