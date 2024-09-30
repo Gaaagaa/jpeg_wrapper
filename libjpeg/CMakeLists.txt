@@ -2,7 +2,7 @@
 # ====================================================================
 # libjpeg
 
-include_directories(inc)
+include_directories(include)
 aux_source_directory(src LIBJPEG_SRC_LIST)
 
 add_library(libjpeg ${LIBJPEG_SRC_LIST})
