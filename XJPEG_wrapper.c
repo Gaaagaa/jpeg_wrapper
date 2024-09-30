@@ -1820,7 +1820,7 @@ j_void_t jdec_set_rfio(jdec_ctxptr_t jdec_cptr, j_bool_t jbl_rfio)
  * @param [in ] jenc_cptr : JPEG 编码操作的上下文对象。
  * @param [in ] jit_mode  : JPEG 编码输入模式（参看 jctrl_mode_t ）。
  * 
- * @param [in ] jht_optr  : 指向输入源的操作信息。
+ * @param [in ] jht_iptr  : 指向输入源的操作信息。
  * - 内存模式，jht_dst 的类型为 j_mem_t ，其为输入 JPEG 数据的缓存地址；
  * - 文件流模式，jht_dst 的类型为 j_fio_t ，其为输入 JPEG 数据的文件流；
  * - 文件模式，jht_dst 的类型为 j_path_t ，其为输入 JPEG 数据的文件路径。
