@@ -1390,7 +1390,6 @@ static j_int_t jdec_info(
 
         //======================================
 
-        // 开启 JPEG 解码
         if (jpeg_sptr->jst_msize > 0)
             jpeg_mem_src(jds_ptr, jpeg_sptr->Jmem_sptr, jpeg_sptr->jst_msize);
         else
