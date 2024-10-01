@@ -198,24 +198,24 @@ typedef enum jenc_errno_table_t
  */
 static inline j_cstring_t jenc_errno_name(j_int_t jit_err)
 {
-    j_cstring_t jszt_name = "";
+    j_cstring_t jsz_name = "";
 
     switch (jit_err)
     {
-    case JENC_ERR_OK             : jszt_name = "JENC_ERR_OK"            ; break;
-    case JENC_ERR_UNKNOWN        : jszt_name = "JENC_ERR_UNKNOWN"       ; break;
-    case JENC_ERR_INVALID_CTXPTR : jszt_name = "JENC_ERR_INVALID_CTXPTR"; break;
-    case JENC_ERR_INVALID_PARAM  : jszt_name = "JENC_ERR_INVALID_PARAM" ; break;
-    case JENC_ERR_INVALID_DST    : jszt_name = "JENC_ERR_INVALID_DST"   ; break;
-    case JENC_ERR_EXCEPTION      : jszt_name = "JENC_ERR_EXCEPTION"     ; break;
-    case JENC_ERR_ALLOC_MEM      : jszt_name = "JENC_ERR_ALLOC_MEM"     ; break;
-    case JENC_ERR_OPEN_FILE      : jszt_name = "JENC_ERR_OPEN_FILE"     ; break;
-    case JENC_ERR_FIO_FGETPOS    : jszt_name = "JENC_ERR_FIO_FGETPOS"   ; break;
+    case JENC_ERR_OK             : jsz_name = "JENC_ERR_OK"            ; break;
+    case JENC_ERR_UNKNOWN        : jsz_name = "JENC_ERR_UNKNOWN"       ; break;
+    case JENC_ERR_INVALID_CTXPTR : jsz_name = "JENC_ERR_INVALID_CTXPTR"; break;
+    case JENC_ERR_INVALID_PARAM  : jsz_name = "JENC_ERR_INVALID_PARAM" ; break;
+    case JENC_ERR_INVALID_DST    : jsz_name = "JENC_ERR_INVALID_DST"   ; break;
+    case JENC_ERR_EXCEPTION      : jsz_name = "JENC_ERR_EXCEPTION"     ; break;
+    case JENC_ERR_ALLOC_MEM      : jsz_name = "JENC_ERR_ALLOC_MEM"     ; break;
+    case JENC_ERR_OPEN_FILE      : jsz_name = "JENC_ERR_OPEN_FILE"     ; break;
+    case JENC_ERR_FIO_FGETPOS    : jsz_name = "JENC_ERR_FIO_FGETPOS"   ; break;
 
     default: break;
     }
 
-    return jszt_name;
+    return jsz_name;
 }
 
 /**********************************************************/
@@ -366,27 +366,27 @@ typedef enum __jdec_errno_table__
  */
 static inline j_cstring_t jdec_errno_name(j_int_t jit_err)
 {
-    j_cstring_t jszt_name = "";
+    j_cstring_t jsz_name = "";
 
     switch (jit_err)
     {
-    case JDEC_ERR_OK             : jszt_name = "JDEC_ERR_OK"            ; break;
-    case JDEC_ERR_UNKNOWN        : jszt_name = "JDEC_ERR_UNKNOWN"       ; break;
-    case JDEC_ERR_INVALID_CTXPTR : jszt_name = "JDEC_ERR_INVALID_CTXPTR"; break;
-    case JDEC_ERR_INVALID_PARAM  : jszt_name = "JDEC_ERR_INVALID_PARAM" ; break;
-    case JDEC_ERR_INVALID_SRC    : jszt_name = "JDEC_ERR_INVALID_SRC"   ; break;
-    case JDEC_ERR_READ_HEADER    : jszt_name = "JDEC_ERR_READ_HEADER"   ; break;
-    case JDEC_ERR_EXCEPTION      : jszt_name = "JDEC_ERR_EXCEPTION"     ; break;
-    case JDEC_ERR_COLOR_FORMAT   : jszt_name = "JDEC_ERR_COLOR_FORMAT"  ; break;
-    case JDEC_ERR_STRIDE         : jszt_name = "JDEC_ERR_STRIDE"        ; break;
-    case JDEC_ERR_CAPACITY       : jszt_name = "JDEC_ERR_CAPACITY"      ; break;
-    case JDEC_ERR_OPEN_FILE      : jszt_name = "JDEC_ERR_OPEN_FILE"     ; break;
-    case JDEC_ERR_FIO_FGETPOS    : jszt_name = "JDEC_ERR_FIO_FGETPOS"   ; break;
+    case JDEC_ERR_OK             : jsz_name = "JDEC_ERR_OK"            ; break;
+    case JDEC_ERR_UNKNOWN        : jsz_name = "JDEC_ERR_UNKNOWN"       ; break;
+    case JDEC_ERR_INVALID_CTXPTR : jsz_name = "JDEC_ERR_INVALID_CTXPTR"; break;
+    case JDEC_ERR_INVALID_PARAM  : jsz_name = "JDEC_ERR_INVALID_PARAM" ; break;
+    case JDEC_ERR_INVALID_SRC    : jsz_name = "JDEC_ERR_INVALID_SRC"   ; break;
+    case JDEC_ERR_READ_HEADER    : jsz_name = "JDEC_ERR_READ_HEADER"   ; break;
+    case JDEC_ERR_EXCEPTION      : jsz_name = "JDEC_ERR_EXCEPTION"     ; break;
+    case JDEC_ERR_COLOR_FORMAT   : jsz_name = "JDEC_ERR_COLOR_FORMAT"  ; break;
+    case JDEC_ERR_STRIDE         : jsz_name = "JDEC_ERR_STRIDE"        ; break;
+    case JDEC_ERR_CAPACITY       : jsz_name = "JDEC_ERR_CAPACITY"      ; break;
+    case JDEC_ERR_OPEN_FILE      : jsz_name = "JDEC_ERR_OPEN_FILE"     ; break;
+    case JDEC_ERR_FIO_FGETPOS    : jsz_name = "JDEC_ERR_FIO_FGETPOS"   ; break;
 
     default: break;
     }
 
-    return jszt_name;
+    return jsz_name;
 }
 
 /**********************************************************/
