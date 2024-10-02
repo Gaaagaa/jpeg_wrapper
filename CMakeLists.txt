@@ -15,12 +15,11 @@ add_subdirectory(libjpeg)
 
 # ====================================================================
 
-include_directories(libjpeg/inc)
+include_directories(
+                libjpeg/include
+                src)
 
-add_executable(test_gray01 test/test_gray01.c XJPEG_wrapper.c)
-target_link_libraries(test_gray01 libjpeg)
-
-add_executable(jerase test/jerase.c XJPEG_wrapper.c)
-target_link_libraries(jerase libjpeg)
+add_executable(jclip test/jclip.cpp src/jdecoder.c src/jencoder.c)
+target_link_libraries(jclip libjpeg)
 
 # ====================================================================
